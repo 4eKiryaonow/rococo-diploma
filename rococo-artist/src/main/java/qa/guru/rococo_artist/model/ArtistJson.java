@@ -5,7 +5,7 @@ import qa.guru.rococo_artist.data.ArtistEntity;
 
 import java.util.UUID;
 
-public record JsonArtist(
+public record ArtistJson(
         @JsonProperty("id")
         UUID id,
         @JsonProperty("name")
@@ -16,8 +16,8 @@ public record JsonArtist(
         String photo
 ) {
 
-    public static JsonArtist fromEntity(ArtistEntity artistEntity) {
-        return new JsonArtist(
+    public static ArtistJson fromEntity(ArtistEntity artistEntity) {
+        return new ArtistJson(
                 artistEntity.getId(),
                 artistEntity.getName(),
                 artistEntity.getBiography(),
