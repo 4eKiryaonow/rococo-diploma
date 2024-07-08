@@ -9,5 +9,5 @@ import java.util.UUID;
 
 public interface GeoRepository extends JpaRepository<GeoEntity, UUID> {
 
-    Optional<GeoEntity> getGeoByIdAndName(@Nonnull UUID countryId, @Nonnull String name);
+    Optional<GeoEntity> getGeoByCountryIdAndName(@Nonnull UUID country_id, @Nonnull String name);
 }

@@ -14,7 +14,7 @@ import qa.guru.rococo_geo.service.GeoService;
 @RequestMapping("/api/country")
 public class GeoController {
 
-    private GeoService geoService;
+    private final GeoService geoService;
 
     @Autowired
     public GeoController(GeoService geoService) {
@@ -33,8 +33,13 @@ public class GeoController {
         return geoService.getCountryById(id);
     }
 
+    @GetMapping("/geo")
+    @ResponseStatus(HttpStatus.OK)
+    GeoJson getGeo(@RequestParam String nameCity, @RequestParam String nameCountry) {
+        return geoService.getGeo(nameCity, nameCountry);
+    }
 
-    @PostMapping
+    @PostMapping("/geo/add")
     @ResponseStatus(HttpStatus.OK)
     GeoJson addGeo(@RequestBody GeoJson geoJson) {
         return geoService.addGeo(geoJson);

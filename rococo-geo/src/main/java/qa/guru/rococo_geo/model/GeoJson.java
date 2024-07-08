@@ -11,13 +11,17 @@ public record GeoJson(
         @JsonProperty("city")
         String name,
         @JsonProperty("country")
-        String country) {
+        CountryJson country) {
 
     public static GeoJson fromEntity(GeoEntity geoEntity) {
         return new GeoJson(
                 geoEntity.getId(),
                 geoEntity.getName(),
-                geoEntity.getCountry().getName()
+                new CountryJson(
+                        geoEntity.getCountry().getId(),
+                        geoEntity.getCountry().getName(),
+                        geoEntity.getCountry().getCode()
+                )
         );
     }
 }

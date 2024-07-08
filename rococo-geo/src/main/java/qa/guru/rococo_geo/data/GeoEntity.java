@@ -23,7 +23,7 @@ public class GeoEntity implements Serializable {
     private String name;
 
     @OneToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "countryId", referencedColumnName = "id")
+    @JoinColumn(name = "country_id", referencedColumnName = "id")
     private CountryEntity country;
 
 

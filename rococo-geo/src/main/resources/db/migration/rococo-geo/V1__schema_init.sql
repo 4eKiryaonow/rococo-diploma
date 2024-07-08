@@ -193,6 +193,6 @@ create table if not exists "geo"
 (
     id          UUID unique  not null default uuid_generate_v1() primary key,
     name        varchar(50)  not null,
-    countryId   UUID         not null,
-    constraint fk_city_country foreign key (countryId) references "country" (id)
+    country_id   UUID         not null,
+    constraint fk_city_country foreign key (country_id) references "country" (id)
 );

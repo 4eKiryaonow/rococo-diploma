@@ -41,40 +41,37 @@ public class GeoService {
         return CountryJson.fromEntity(country);
     }
 
-    @Transactional(readOnly = true)
-    public CountryJson getCountryByName(String name) {
-        CountryEntity country = countryRepository
-                .getCountryByName(name)
-                .orElseThrow(() -> new CountryNotFoundException("Can`t find country by given name: " + name)
-                );
-        return CountryJson.fromEntity(country);
-    }
-
     @Transactional
-    public GeoJson getGeo(GeoJson geoJson) {
-        final UUID countryId = UUID.fromString(geoJson.country());
+    public GeoJson getGeo(String nameCity, String nameCountry) {
         CountryEntity country = countryRepository
-                .findById(countryId)
-                .orElseThrow(() -> new CountryNotFoundException("Can`t find country by given id: " + countryId)
+                .getCountryByName(nameCountry)
+                .orElseThrow(() -> new CountryNotFoundException("Can`t find country by given name: " + nameCountry)
                 );
+        final UUID countryId = country.getId();
 
         GeoEntity geoEntity = geoRepository
-                .getGeoByIdAndName(countryId, geoJson.name())
+                .getGeoByCountryIdAndName(countryId, nameCity)
                 .orElseThrow(() -> new GeoNotFoundException("Can`t find country by given name : "
-                        + geoJson.name() + " and country_id: " + countryId));
+                        + nameCity + " and countryId: " + countryId));
         return GeoJson.fromEntity(geoEntity);
     }
 
     @Transactional
     public GeoJson addGeo(GeoJson geoJson) {
-        CountryJson countryJson = getCountryByName(geoJson.country());
-        Optional<GeoEntity> geoEntity = geoRepository.getGeoByIdAndName(countryJson.id(), countryJson.name());
+        final String nameCountry = geoJson.country().name();
+        CountryEntity country = countryRepository
+                .getCountryByName(nameCountry)
+                .orElseThrow(() -> new CountryNotFoundException("Can`t find country by given name: " + nameCountry)
+                );
+        final UUID countryId = country.getId();
+        final String name = geoJson.name();
+        Optional<GeoEntity> geoEntity = geoRepository.getGeoByCountryIdAndName(countryId, name);
 
         if (geoEntity.isPresent()) {
             return GeoJson.fromEntity(geoEntity.get());
         } else {
             GeoEntity entity = new GeoEntity();
-            entity.setCountry(CountryEntity.fromJson(countryJson));
+            entity.setCountry(CountryEntity.fromJson(CountryJson.fromEntity(country)));
             entity.setName(geoJson.name());
             entity = geoRepository.save(entity);
             return GeoJson.fromEntity(entity);
