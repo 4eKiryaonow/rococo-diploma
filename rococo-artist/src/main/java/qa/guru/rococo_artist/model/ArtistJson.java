@@ -3,6 +3,7 @@ package qa.guru.rococo_artist.model;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import qa.guru.rococo_artist.data.ArtistEntity;
 
+import java.nio.charset.StandardCharsets;
 import java.util.UUID;
 
 public record ArtistJson(
@@ -17,11 +18,12 @@ public record ArtistJson(
 ) {
 
     public static ArtistJson fromEntity(ArtistEntity artistEntity) {
+        byte[] photo = artistEntity.getPhoto();
         return new ArtistJson(
                 artistEntity.getId(),
                 artistEntity.getName(),
                 artistEntity.getBiography(),
-                artistEntity.getPhoto()
+                photo != null && photo.length > 0 ? new String(artistEntity.getPhoto(), StandardCharsets.UTF_8) : null
         );
     }
 }

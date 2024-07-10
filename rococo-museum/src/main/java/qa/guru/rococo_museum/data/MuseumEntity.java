@@ -26,7 +26,7 @@ public class MuseumEntity implements Serializable {
     private String description;
 
     @Column(name = "photo", nullable = false)
-    private String photo;
+    private byte[] photo;
 
     @Column(name = "city", nullable = false)
     private String city;

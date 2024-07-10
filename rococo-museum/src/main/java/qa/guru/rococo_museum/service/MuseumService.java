@@ -13,6 +13,7 @@ import qa.guru.rococo_museum.service.api.RestGeoClient;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+import java.nio.charset.StandardCharsets;
 import java.util.Objects;
 import java.util.UUID;
 
@@ -58,7 +59,7 @@ public class MuseumService {
         MuseumEntity museumEntity = new MuseumEntity();
         museumEntity.setTitle(museumJson.title());
         museumEntity.setDescription(museumJson.description());
-        museumEntity.setPhoto(museumJson.photo());
+        museumEntity.setPhoto(museumJson.photo().getBytes(StandardCharsets.UTF_8));
         museumEntity.setCountry(museumJson.geo().country().name());
         museumEntity.setCity(museumJson.geo().name());
         museumEntity = museumRepository.save(museumEntity);
@@ -72,7 +73,7 @@ public class MuseumService {
                         museumEntity -> {
                             museumEntity.setTitle(museumJson.title());
                             museumEntity.setDescription(museumJson.description());
-                            museumEntity.setPhoto(museumJson.photo());
+                            museumEntity.setPhoto(museumJson.photo().getBytes(StandardCharsets.UTF_8));
                             museumEntity.setCountry(museumJson.geo().country().name());
                             museumEntity.setCity(museumJson.geo().name());
                             GeoJson geoJson = addGeo(museumJson.geo());

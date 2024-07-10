@@ -37,6 +37,5 @@ spring:
     show-sql: false
     generate-ddl: true
     open-in-view: false
-
-
-
+rococo-artist:
+  base-uri: "http://127.0.0.1:9002"

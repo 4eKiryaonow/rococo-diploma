@@ -9,6 +9,7 @@ import qa.guru.rococo_artist.data.ArtistRepository;
 import qa.guru.rococo_artist.ex.ArtistNotFoundException;
 import qa.guru.rococo_artist.model.ArtistJson;
 
+import java.nio.charset.StandardCharsets;
 import java.util.UUID;
 
 @Component
@@ -53,7 +54,7 @@ public class ArtistService {
                 new ArtistNotFoundException("Can`t find country by given code: " + artist.id()));
         artistEntity.setName(artist.name());
         artistEntity.setBiography(artist.biography());
-        artistEntity.setPhoto(artist.photo());
+        artistEntity.setPhoto(artist.photo().getBytes(StandardCharsets.UTF_8));
         return ArtistJson.fromEntity(artistRepository.save(artistEntity));
     }
 }
