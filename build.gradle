@@ -10,14 +10,12 @@ subprojects {
         mavenCentral()
     }
     ext {
-        dockerHubName = "qaguru"
-
         lombokVersion = '1.18.32'
-        springKafkaVersion = '3.1.4'
+        springKafkaVersion = '3.0.7'
         postgresDriverVersion = '42.7.3'
         flywayVersion = '10.11.0'
         oauth2AuthorizationServerVersion = '1.2.4'
-        oauth2ResourceServerVersion = '3.2.5'
+        oauth2ResourceServerVersion = '3.1.4'
         springVaultVersion = '4.1.1'
         springGrpcVersion = '3.0.0.RELEASE'
         springGraphqlDateTimeVersion = '6.0.0'

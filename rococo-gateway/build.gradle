@@ -8,41 +8,20 @@ plugins {
 version = '0.0.1-SNAPSHOT'
 
 dependencies {
-    implementation 'org.springframework.boot:spring-boot-starter'
+    implementation 'org.springframework.data:spring-data-commons'
     implementation 'org.springframework.boot:spring-boot-starter-security'
     implementation 'org.springframework.boot:spring-boot-starter-web'
-    implementation "org.springframework.boot:spring-boot-starter-thymeleaf"
     implementation "org.springframework.boot:spring-boot-starter-validation"
     implementation "org.springframework.security:spring-security-oauth2-authorization-server:${project.ext.oauth2AuthorizationServerVersion}"
-    implementation "org.springframework.kafka:spring-kafka:${project.ext.springKafkaVersion}"
     implementation "com.google.code.findbugs:jsr305:${project.ext.jsr305Version}"
+    implementation 'org.springframework.boot:spring-boot-starter-actuator'
     annotationProcessor "org.projectlombok:lombok:${project.ext.lombokVersion}"
     compileOnly "org.projectlombok:lombok:${project.ext.lombokVersion}"
+    implementation "org.springframework:spring-webflux"
+
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
 }
 
-jib {
-    container {
-        ports = ['9000']
-        jvmFlags = ["-Dspring.profiles.active=${System.env.PROFILE}"]
-        environment = ['VAULT_TOKEN': "${System.env.VAULT_TOKEN}".toString()]
-        creationTime = 'USE_CURRENT_TIMESTAMP'
+    tasks.named('test') {
+        useJUnitPlatform()
     }
-    from {
-        image = "${project.ext.dockerImage}"
-        platforms {
-            platform {
-                architecture = "${project.ext.dockerArch}"
-                os = 'linux'
-            }
-        }
-    }
-    to {
-        image = "${project.ext.dockerHubName}/${project.name}-${System.env.PROFILE}"
-        tags = ['latest', "${project.version}"]
-    }
-}
-
-tasks.named('test') {
-    useJUnitPlatform()
-}

@@ -9,7 +9,7 @@ spring:
   application:
     name: rococo-painting
   datasource:
-    url: 'jdbc:postgresql://localhost:5432/painting'
+    url: 'jdbc:postgresql://localhost:5432/rococo-painting'
     username: postgres
     password: secret
     hikari:

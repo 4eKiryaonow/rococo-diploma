@@ -9,7 +9,7 @@ spring:
   application:
     name: rococo-geo
   datasource:
-    url: 'jdbc:postgresql://localhost:5432/geo'
+    url: 'jdbc:postgresql://localhost:5432/rococo-geo'
     username: postgres
     password: secret
     hikari:

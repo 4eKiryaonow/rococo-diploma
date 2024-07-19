@@ -9,7 +9,7 @@ spring:
   application:
     name: rococo-userdata
   datasource:
-    url: 'jdbc:postgresql://localhost:5432/userdata'
+    url: 'jdbc:postgresql://localhost:5432/rococo-userdata'
     username: postgres
     password: secret
     hikari:
@@ -37,6 +37,10 @@ spring:
     show-sql: false
     generate-ddl: true
     open-in-view: false
-
-
-
+  kafka:
+    bootstrap-servers: 'localhost:9092'
+    consumer:
+      group-id: 'userdata'
+      auto-offset-reset: earliest
+rococo-userdata:
+  base-uri: "http://127.0.0.1:9005"

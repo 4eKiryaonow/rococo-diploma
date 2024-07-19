@@ -1,5 +1,5 @@
 server:
-  port: 8090
+  port: 8080
   servlet:
     session:
       cookie:
@@ -8,5 +8,30 @@ server:
 spring:
   application:
     name: rococo-gateway
+  mvc:
+    log-request-details: true
 
-
+logging:
+  level:
+    root: DEBUG
+    org.springframework.web: DEBUG
+    org.springframework.security: DEBUG
+    org.springframework.security.oauth2: DEBUG
+    net.devh.boot.grpc: DEBUG
+rococo-geo:
+  base-uri: "http://127.0.0.1:9001"
+rococo-artist:
+  base-uri: "http://127.0.0.1:9002"
+rococo-museum:
+  base-uri: "http://127.0.0.1:9003"
+rococo-painting:
+  base-uri: "http://127.0.0.1:9004"
+rococo-userdata:
+  base-uri: "http://127.0.0.1:9005"
+rococo-front:
+  base-uri: 'http://127.0.0.1:3000'
+security:
+  oauth2:
+    resourceserver:
+      jwt:
+        issuer-uri: 'http://127.0.0.1:9000'
