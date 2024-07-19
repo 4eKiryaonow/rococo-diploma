@@ -34,6 +34,7 @@ public class SecurityConfig {
                                 antMatcher(HttpMethod.GET, "/api/artist/**"),
                                 antMatcher(HttpMethod.GET, "/api/museum/**"),
                                 antMatcher(HttpMethod.GET, "/api/painting/**"),
+                                antMatcher(HttpMethod.GET, "/api/country/**"),
                                 antMatcher("/actuator/health"))
                         .permitAll()
                         .anyRequest()
