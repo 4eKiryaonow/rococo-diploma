@@ -25,7 +25,7 @@ public class RestArtistClient {
     public RestArtistClient(RestTemplate restTemplate,
                             @Value("${rococo-artist.base-uri}") String rococoArtistApiUri) {
         this.restTemplate = restTemplate;
-        this.rococoArtistApiUri = rococoArtistApiUri + "/api/artist";
+        this.rococoArtistApiUri = rococoArtistApiUri + "/internal/artist";
     }
 
     public @Nonnull ArtistJson getArtist(@Nonnull String id) {

@@ -42,7 +42,7 @@ public class RestUserDataClient  {
     public @Nonnull
     UserJson updateUserInfo(@Nonnull UserJson user) {
         return webClient.patch()
-                .uri(rococoUserdataBaseUri + "/api/user")
+                .uri(rococoUserdataBaseUri + "/internal/user")
                 .body(Mono.just(user), UserJson.class)
                 .retrieve()
                 .bodyToMono(UserJson.class)

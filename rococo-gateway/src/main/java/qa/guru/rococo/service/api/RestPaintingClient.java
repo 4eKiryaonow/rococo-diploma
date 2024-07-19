@@ -24,7 +24,7 @@ public class RestPaintingClient {
     public RestPaintingClient(RestTemplate restTemplate,
                               @Value("${rococo-painting.base-uri}") String rococoPaintingUri) {
         this.restTemplate = restTemplate;
-        this.rococoPaintingUri = rococoPaintingUri + "/api/painting";
+        this.rococoPaintingUri = rococoPaintingUri + "/internal/painting";
     }
 
     public @Nonnull Page<PaintingJson> getAllPaintings(Pageable pageable) {
