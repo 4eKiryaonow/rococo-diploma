@@ -23,7 +23,7 @@ public class GeoController {
 
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
-    Page<CountryJson> getAllCountries(@PageableDefault Pageable pageable) {
+    Page<CountryJson> getAllCountries(Pageable pageable) {
         return geoService.getAllCountries(pageable);
     }
 

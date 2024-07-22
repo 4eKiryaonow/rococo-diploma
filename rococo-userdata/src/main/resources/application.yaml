@@ -1,17 +1,13 @@
 server:
   port: 9005
-  servlet:
-    session:
-      cookie:
-        http-only: false
-        secure: false
+  error:
+    include:
+      message: true
+
 spring:
   application:
     name: rococo-userdata
   datasource:
-    url: 'jdbc:postgresql://localhost:5432/rococo-userdata'
-    username: postgres
-    password: secret
     hikari:
       connection-timeout: 20000
       minimum-idle: 10
@@ -37,10 +33,34 @@ spring:
     show-sql: false
     generate-ddl: true
     open-in-view: false
+
+logging:
+  level:
+    root: INFO
+    org.springframework.kafka: INFO
+    org.springframework.web: INFO
+    org.springframework.ws: INFO
+#    org.springframework.boot.autoconfigure: DEBUG
+
+---
+spring:
+  config:
+    activate:
+      on-profile: 'local'
+  autoconfigure:
+    exclude:
+      - 'org.springframework.cloud.vault.config.VaultAutoConfiguration'
+      - 'org.springframework.cloud.vault.config.VaultObservationAutoConfiguration'
+      - 'org.springframework.cloud.vault.config.VaultReactiveAutoConfiguration'
   kafka:
     bootstrap-servers: 'localhost:9092'
     consumer:
       group-id: 'userdata'
       auto-offset-reset: earliest
+  datasource:
+    url: 'jdbc:postgresql://localhost:5432/rococo-userdata'
+    username: postgres
+    password: secret
 rococo-userdata:
-  base-uri: "http://127.0.0.1:9005"
+  base-uri: 'http://127.0.0.1:9005'
+---

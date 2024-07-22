@@ -52,7 +52,7 @@ public class PaintingService {
     }
 
     @Transactional(readOnly = true)
-    public Page<PaintingJson> getPaintingByAuthorId(@Nonnull String authorId, Pageable pageable) {
+    public Page<PaintingJson> getPaintingByArtistId(@Nonnull String authorId, Pageable pageable) {
         ArtistJson artistJson = getArtist(authorId);
         Page<PaintingEntity> paintingEntities = paintingRepository.findByArtistId(artistJson.id(), pageable);
         return paintingEntities.map(PaintingJson::fromEntity);
@@ -65,8 +65,8 @@ public class PaintingService {
         paintingEntity.setDescription(paintingJson.description());
         paintingEntity.setTitle(paintingJson.title());
         paintingEntity.setContent(paintingJson.content().getBytes(StandardCharsets.UTF_8));
-        paintingEntity.setArtistId(paintingJson.artistId());
-        paintingEntity.setMuseumId(paintingJson.museumId());
+        paintingEntity.setArtistId(paintingJson.artistJson().id());
+        paintingEntity.setMuseumId(paintingJson.museumJson().id());
         return PaintingJson.fromEntity(paintingRepository.save(paintingEntity));
     }
 
@@ -77,8 +77,8 @@ public class PaintingService {
                     paintingEntity.setDescription(paintingJson.description());
                     paintingEntity.setTitle(paintingJson.title());
                     paintingEntity.setContent(paintingJson.content().getBytes(StandardCharsets.UTF_8));
-                    paintingEntity.setArtistId(paintingJson.artistId());
-                    paintingEntity.setMuseumId(paintingJson.museumId());
+                    paintingEntity.setArtistId(paintingJson.artistJson().id());
+                    paintingEntity.setMuseumId(paintingJson.museumJson().id());
                     return PaintingJson.fromEntity(paintingEntity);
                 }
         ).orElseThrow(() -> new PaintingNotFoundException("Can`t find painting by given id: " + paintingJson.id())

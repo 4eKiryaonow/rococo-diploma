@@ -33,9 +33,9 @@ public class PaintingController {
 
     @GetMapping("/author/{id}")
     @ResponseStatus(HttpStatus.OK)
-    Page<PaintingJson> getPaintingsByAuthorId(@PathVariable String id,
+    Page<PaintingJson> getPaintingsByArtistId(@PathVariable String id,
                                               @PageableDefault Pageable pageable) {
-        return paintingService.getPaintingByAuthorId(id, pageable);
+        return paintingService.getPaintingByArtistId(id, pageable);
     }
 
     @PostMapping("/add")

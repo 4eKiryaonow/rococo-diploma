@@ -1,23 +1,36 @@
 server:
   port: 8080
-  servlet:
-    session:
-      cookie:
-        http-only: false
-        secure: false
+  error:
+    include:
+      message: true
+
 spring:
   application:
     name: rococo-gateway
-  mvc:
-    log-request-details: true
 
 logging:
   level:
-    root: DEBUG
+    root: INFO
     org.springframework.web: DEBUG
     org.springframework.security: DEBUG
     org.springframework.security.oauth2: DEBUG
     net.devh.boot.grpc: DEBUG
+
+---
+spring:
+  config:
+    activate:
+      on-profile: 'local'
+  autoconfigure:
+    exclude:
+      - 'org.springframework.cloud.vault.config.VaultAutoConfiguration'
+      - 'org.springframework.cloud.vault.config.VaultObservationAutoConfiguration'
+      - 'org.springframework.cloud.vault.config.VaultReactiveAutoConfiguration'
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: 'http://127.0.0.1:9000'
 rococo-geo:
   base-uri: "http://127.0.0.1:9001"
 rococo-artist:
@@ -30,8 +43,4 @@ rococo-userdata:
   base-uri: "http://127.0.0.1:9005"
 rococo-front:
   base-uri: 'http://127.0.0.1:3000'
-security:
-  oauth2:
-    resourceserver:
-      jwt:
-        issuer-uri: 'http://127.0.0.1:9000'
+---

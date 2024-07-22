@@ -1,10 +1,10 @@
-package qa.guru.rococo_painting;
+package qa.guru.rococo;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class RococoPaintingApplicationTests {
+class RococoMuseumApplicationTests {
 
 	@Test
 	void contextLoads() {

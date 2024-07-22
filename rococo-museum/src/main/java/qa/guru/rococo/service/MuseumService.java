@@ -5,6 +5,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 import qa.guru.rococo.data.repository.MuseumRepository;
+import qa.guru.rococo.model.CountryJson;
 import qa.guru.rococo.model.MuseumJson;
 import qa.guru.rococo.service.api.RestGeoClient;
 import qa.guru.rococo.data.MuseumEntity;
@@ -45,7 +46,6 @@ public class MuseumService {
         );
     }
 
-    @Transactional(readOnly = true)
     public MuseumJson getMuseumById(@Nonnull String id) {
         MuseumEntity museumEntity = museumRepository
                 .findById(UUID.fromString(id))
@@ -56,14 +56,16 @@ public class MuseumService {
 
     @Transactional
     public MuseumJson addMuseum(MuseumJson museumJson) {
+        CountryJson country = getCountryById(String.valueOf(museumJson.geo().country().id()));
+        GeoJson geoJson = new GeoJson(null, museumJson.geo().name(), country);
+        geoJson = addGeo(geoJson);
         MuseumEntity museumEntity = new MuseumEntity();
         museumEntity.setTitle(museumJson.title());
         museumEntity.setDescription(museumJson.description());
         museumEntity.setPhoto(museumJson.photo().getBytes(StandardCharsets.UTF_8));
-        museumEntity.setCountry(museumJson.geo().country().name());
-        museumEntity.setCity(museumJson.geo().name());
+        museumEntity.setCountry(geoJson.country().name());
+        museumEntity.setCity(geoJson.name());
         museumEntity = museumRepository.save(museumEntity);
-        GeoJson geoJson = addGeo(museumJson.geo());
         return MuseumJson.fromEntity(museumEntity, geoJson);
     }
 
@@ -74,9 +76,11 @@ public class MuseumService {
                             museumEntity.setTitle(museumJson.title());
                             museumEntity.setDescription(museumJson.description());
                             museumEntity.setPhoto(museumJson.photo().getBytes(StandardCharsets.UTF_8));
-                            museumEntity.setCountry(museumJson.geo().country().name());
-                            museumEntity.setCity(museumJson.geo().name());
-                            GeoJson geoJson = addGeo(museumJson.geo());
+                            CountryJson country = getCountryById(String.valueOf(museumJson.geo().country().id()));
+                            GeoJson geoJson = new GeoJson(null, museumJson.geo().name(), country);
+                            geoJson = addGeo(geoJson);
+                            museumEntity.setCountry(geoJson.country().name());
+                            museumEntity.setCity(geoJson.name());
                             return MuseumJson.fromEntity(museumEntity,geoJson);
                         }
                 )
@@ -90,5 +94,9 @@ public class MuseumService {
 
     private @Nonnull GeoJson addGeo(GeoJson geoJson) {
         return restGeoClient.addGeo(geoJson);
+    }
+
+    private @Nonnull CountryJson getCountryById(@Nonnull String id) {
+        return restGeoClient.getCountry(id);
     }
 }

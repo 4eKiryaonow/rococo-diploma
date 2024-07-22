@@ -4,10 +4,11 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.util.UUID;
 
-public record CountryJson(
+public record GeoJson(
         @JsonProperty("id")
         UUID id,
-        @JsonProperty("name")
-        String name) {
+        @JsonProperty("city")
+        String name,
+        @JsonProperty("country")
+        CountryJson country) {
 }
-

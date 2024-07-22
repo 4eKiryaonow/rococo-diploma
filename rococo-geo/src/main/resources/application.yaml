@@ -9,7 +9,6 @@ spring:
   application:
     name: rococo-geo
   datasource:
-    url: 'jdbc:postgresql://localhost:5432/rococo-geo'
     username: postgres
     password: secret
     hikari:
@@ -37,6 +36,14 @@ spring:
     show-sql: false
     generate-ddl: true
     open-in-view: false
-
-
-
+---
+spring:
+  config:
+    activate:
+      on-profile: 'local'
+  datasource:
+    url: 'jdbc:postgresql://localhost:5432/rococo-geo'
+  jpa:
+    hibernate:
+      ddl-auto: validate
+---

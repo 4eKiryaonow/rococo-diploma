@@ -3,6 +3,7 @@ package qa.guru.rococo.config;
 import org.apache.kafka.common.serialization.StringDeserializer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.kafka.KafkaProperties;
+import org.springframework.boot.ssl.DefaultSslBundleRegistry;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.kafka.config.ConcurrentKafkaListenerContainerFactory;
@@ -26,7 +27,7 @@ public class RococoUserdataConsumerConfiguration {
         final JsonDeserializer<UserJson> jsonDeserializer = new JsonDeserializer<>();
         jsonDeserializer.addTrustedPackages("*");
         return new DefaultKafkaConsumerFactory<>(
-                kafkaProperties.buildConsumerProperties(),
+                kafkaProperties.buildConsumerProperties(new DefaultSslBundleRegistry()),
                 new StringDeserializer(),
                 jsonDeserializer
         );

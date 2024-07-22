@@ -1,20 +1,18 @@
 server:
   port: 9000
+  # ONLY FOR TESTING
   servlet:
     session:
       cookie:
         http-only: false
         secure: false
-  error:
-    include:
-      message: true
+
 spring:
   application:
     name: rococo-auth
+  mvc:
+    log-request-details: true
   datasource:
-    url: 'jdbc:postgresql://localhost:5432/rococo-auth'
-    username: postgres
-    password: secret
     hikari:
       connection-timeout: 20000
       minimum-idle: 10
@@ -40,6 +38,34 @@ spring:
     show-sql: false
     generate-ddl: true
     open-in-view: false
+
+logging:
+  level:
+    root: INFO
+    org.springframework.kafka: INFO
+    org.springframework.web: INFO
+    org.springframework.security: INFO
+    org.springframework.security.oauth2: INFO
+    org.springframework.web.cors: INFO
+    org.apache.catalina.filters.RequestDumperFilter: DEBUG
+#    org.springframework.boot.autoconfigure: DEBUG
+
+---
+spring:
+  config:
+    activate:
+      on-profile: 'local'
+  autoconfigure:
+    exclude:
+      - 'org.springframework.cloud.vault.config.VaultAutoConfiguration'
+      - 'org.springframework.cloud.vault.config.VaultObservationAutoConfiguration'
+      - 'org.springframework.cloud.vault.config.VaultReactiveAutoConfiguration'
+  kafka:
+    bootstrap-servers: 'localhost:9092'
+  datasource:
+    url: 'jdbc:postgresql://localhost:5432/rococo-auth'
+    username: postgres
+    password: secret
 rococo-front:
   base-uri: 'http://127.0.0.1:3000'
 rococo-auth:
@@ -47,8 +73,4 @@ rococo-auth:
 oauth2:
   client-id: 'client'
   client-secret: '{noop}secret'
-kafka:
-  bootstrap-servers: 'localhost:9092'
-
-
-
+---

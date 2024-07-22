@@ -42,13 +42,13 @@ public class PaintingController {
         return restPaintingClient.getPaintingByAuthorId(id,pageable);
     }
 
-    @PostMapping("/add")
+    @PostMapping()
     @ResponseStatus(HttpStatus.OK)
     PaintingJson addPainting(@RequestBody PaintingJson paintingJson) {
         return restPaintingClient.addPainting(paintingJson);
     }
 
-    @PatchMapping("/edit")
+    @PatchMapping()
     @ResponseStatus(HttpStatus.OK)
     PaintingJson editPainting(@RequestBody PaintingJson paintingJson) {
         return restPaintingClient.editPainting(paintingJson);

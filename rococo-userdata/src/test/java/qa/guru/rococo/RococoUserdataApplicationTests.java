@@ -1,4 +1,4 @@
-package qa.guru.rococo_userdata;
+package qa.guru.rococo;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;

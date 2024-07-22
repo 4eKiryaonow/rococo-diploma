@@ -9,6 +9,7 @@ import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
 import qa.guru.rococo.ex.NoRestResponseException;
 import qa.guru.rococo.model.MuseumJson;
+import qa.guru.rococo.model.page.RestPage;
 import qa.guru.rococo.service.RestResponsePage;
 
 import java.util.List;
@@ -28,17 +29,14 @@ public class RestMuseumClient {
     }
 
     public @Nonnull Page<MuseumJson> getAllMuseums(Pageable pageable) {
-        String uri = UriComponentsBuilder.fromHttpUrl(rococoMuseumUri)
-                .queryParam("page", pageable.getPageNumber())
-                .queryParam("size", pageable.getPageSize())
-                .toUriString();
-
-        return new RestResponsePage<>(List.of(
-                Optional.ofNullable(
+        return Optional.ofNullable(
                         restTemplate
-                                .getForObject(uri, MuseumJson[].class)
-                ).orElseThrow(() -> new NoRestResponseException("No REST ArtistJson response is given [/api/museum/ Route]"))
-        ));
+                                .getForObject(
+                                        rococoMuseumUri + "?size={size}&page={page}",
+                                        RestPage.class,
+                                        pageable.getPageSize(),
+                                        pageable.getPageNumber())
+                ).orElseThrow(() -> new NoRestResponseException("No REST Page<MuseumJson> response is given [/api/museum/ Route]"));
     }
 
     public @Nonnull MuseumJson getMuseum(@Nonnull String id) {
@@ -48,7 +46,7 @@ public class RestMuseumClient {
                         MuseumJson.class,
                         id
                 ))
-        ).orElseThrow(() -> new NoRestResponseException("No REST ArtistJson response is given [/api/museum/{id} Route]"));
+        ).orElseThrow(() -> new NoRestResponseException("No REST MuseumJson response is given [/api/museum/{id} Route]"));
     }
 
     public @Nonnull MuseumJson addMuseum(MuseumJson museumJson) {
@@ -57,7 +55,7 @@ public class RestMuseumClient {
                         rococoMuseumUri + "/add",
                         museumJson,
                         MuseumJson.class)
-        ).orElseThrow(() -> new NoRestResponseException("No REST ArtistJson response is given [/api/museum/ Route]")
+        ).orElseThrow(() -> new NoRestResponseException("No REST MuseumJson response is given [/api/museum/ Route]")
         );
     }
 
@@ -67,7 +65,7 @@ public class RestMuseumClient {
                         rococoMuseumUri + "/edit",
                         museumJson,
                         MuseumJson.class)
-        ).orElseThrow(() -> new NoRestResponseException("No REST ArtistJson response is given [/api/museum/ Route]")
+        ).orElseThrow(() -> new NoRestResponseException("No REST MuseumJson response is given [/api/museum/ Route]")
         );
     }
 

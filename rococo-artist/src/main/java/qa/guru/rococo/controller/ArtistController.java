@@ -32,13 +32,13 @@ public class ArtistController {
         return artistService.getById(UUID.fromString(id));
     }
 
-    @PostMapping
+    @PostMapping("/add")
     @ResponseStatus(HttpStatus.OK)
     ArtistJson addArtist(@RequestBody ArtistJson artist) {
         return artistService.addArtist(artist);
     }
 
-    @PatchMapping
+    @PatchMapping("/edit")
     @ResponseStatus(HttpStatus.OK)
     ArtistJson editArtist(@RequestBody ArtistJson artist) {
         return artistService.editArtist(artist);

@@ -9,7 +9,6 @@ spring:
   application:
     name: rococo-artist
   datasource:
-    url: 'jdbc:postgresql://localhost:5432/rococo-artist'
     username: postgres
     password: secret
     hikari:
@@ -26,8 +25,6 @@ spring:
     schemas: public
     locations: classpath:db/migration/rococo-artist
   jpa:
-    hibernate:
-      ddl-auto: none
     properties:
       hibernate:
         jdbc:
@@ -37,6 +34,18 @@ spring:
     show-sql: false
     generate-ddl: true
     open-in-view: false
+
+---
+spring:
+  config:
+    activate:
+      on-profile: 'local'
+  datasource:
+    url: 'jdbc:postgresql://localhost:5432/rococo-artist'
+  jpa:
+    hibernate:
+      ddl-auto: validate
+---
 
 
 

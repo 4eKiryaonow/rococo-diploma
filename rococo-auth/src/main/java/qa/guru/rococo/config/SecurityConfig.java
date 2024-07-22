@@ -24,18 +24,17 @@ import qa.guru.rococo.service.cors.CorsCustomizer;
 
 import static org.springframework.security.web.util.matcher.AntPathRequestMatcher.antMatcher;
 
-@EnableWebSecurity
 @Configuration
 public class SecurityConfig {
 
-    @Value("${rococo-front.base-uri}")
-    String rococoFrontUri;
+    private final CorsCustomizer corsCustomizer;
+    private final Environment environment;
 
     @Autowired
-    private CorsCustomizer corsCustomizer;
-
-    @Autowired
-    private Environment environment;
+    public SecurityConfig(CorsCustomizer corsCustomizer, Environment environment) {
+        this.corsCustomizer = corsCustomizer;
+        this.environment = environment;
+    }
 
     @Bean
     public SecurityFilterChain defaultSecurityFilterChain(HttpSecurity http) throws Exception {
@@ -48,31 +47,34 @@ public class SecurityConfig {
             ), DisableEncodeUrlFilter.class);
         }
 
-        http.authorizeHttpRequests(authorize ->
-                        authorize.requestMatchers("/register", "/images/**", "/styles/**", "/fonts/**", "/actuator/health")
-                                .permitAll()
-                                .anyRequest()
-                                .authenticated()
+        return http.authorizeHttpRequests(customizer -> customizer
+                        .requestMatchers(
+                                antMatcher("/register"),
+                                antMatcher("/images/**"),
+                                antMatcher("/styles/**"),
+                                antMatcher("/fonts/**"),
+                                antMatcher("/actuator/health")
+                        ).permitAll()
+                        .anyRequest()
+                        .authenticated()
                 )
-                .csrf((csrf) -> csrf
+                .csrf(csrf -> csrf
                         .csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse())
+                        // https://stackoverflow.com/a/74521360/65681
                         .csrfTokenRequestHandler(new CsrfTokenRequestAttributeHandler())
                 )
                 .addFilterAfter(new CookieCsrfFilter(), BasicAuthenticationFilter.class)
-                .formLogin(form -> form
+                .formLogin(login -> login
                         .loginPage("/login")
                         .permitAll())
-                .logout(logout ->
-                        logout.logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
-                                .deleteCookies("JSESSIONID", "XSRF-TOKEN")
-                                .invalidateHttpSession(true)
-                                .clearAuthentication(true)
-                                .logoutSuccessHandler((new HttpStatusReturningLogoutSuccessHandler(HttpStatus.OK)))
+                .logout(logout -> logout
+                        .logoutRequestMatcher(antMatcher("/logout")) // https://github.com/spring-projects/spring-authorization-server/issues/266
+                        .deleteCookies("JSESSIONID", "XSRF-TOKEN")
+                        .invalidateHttpSession(true)
+                        .clearAuthentication(true)
+                        .logoutSuccessHandler(new HttpStatusReturningLogoutSuccessHandler(HttpStatus.OK))
                 )
-                .sessionManagement(sm ->
-                        sm.invalidSessionUrl("/login")
-                );
-
-        return http.formLogin(Customizer.withDefaults()).build();
+                .sessionManagement(sm -> sm.invalidSessionUrl("/login"))
+                .build();
     }
 }

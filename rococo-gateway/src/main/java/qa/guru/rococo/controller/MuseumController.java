@@ -35,13 +35,13 @@ public class MuseumController {
         return restMuseumClient.getMuseum(id);
     }
 
-    @PostMapping("/add")
+    @PostMapping()
     @ResponseStatus(HttpStatus.OK)
     MuseumJson createMuseum(@RequestBody MuseumJson museumJson) {
         return restMuseumClient.addMuseum(museumJson);
     }
 
-    @PatchMapping("/edit")
+    @PatchMapping()
     @ResponseStatus(HttpStatus.OK)
     MuseumJson editMuseum(@RequestBody MuseumJson museumJson) {
         return restMuseumClient.editMuseum(museumJson);

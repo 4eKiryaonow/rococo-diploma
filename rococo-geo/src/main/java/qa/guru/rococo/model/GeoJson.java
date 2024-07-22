@@ -1,10 +1,10 @@
 package qa.guru.rococo.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import lombok.Setter;
 import qa.guru.rococo.data.GeoEntity;
 
 import java.util.UUID;
-
 public record GeoJson(
         @JsonProperty("id")
         UUID id,
@@ -19,8 +19,7 @@ public record GeoJson(
                 geoEntity.getName(),
                 new CountryJson(
                         geoEntity.getCountry().getId(),
-                        geoEntity.getCountry().getName(),
-                        geoEntity.getCountry().getCode()
+                        geoEntity.getCountry().getName()
                 )
         );
     }

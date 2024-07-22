@@ -27,12 +27,10 @@ public class GeoService {
         this.geoRepository = geoRepository;
     }
 
-    @Transactional(readOnly = true)
     public Page<CountryJson> getAllCountries(Pageable pageable) {
-        return countryRepository.findAll(pageable).map(CountryJson::fromEntity);
+        return countryRepository.findAllByOrderByNameAsc(pageable).map(CountryJson::fromEntity);
     }
 
-    @Transactional(readOnly = true)
     public CountryJson getCountryById(String id) {
         CountryEntity country = countryRepository
                 .findById(UUID.fromString(id))
@@ -41,7 +39,6 @@ public class GeoService {
         return CountryJson.fromEntity(country);
     }
 
-    @Transactional
     public GeoJson getGeo(String nameCity, String nameCountry) {
         CountryEntity country = countryRepository
                 .getCountryByName(nameCountry)
@@ -56,7 +53,6 @@ public class GeoService {
         return GeoJson.fromEntity(geoEntity);
     }
 
-    @Transactional
     public GeoJson addGeo(GeoJson geoJson) {
         final String nameCountry = geoJson.country().name();
         CountryEntity country = countryRepository

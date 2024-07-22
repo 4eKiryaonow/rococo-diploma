@@ -16,9 +16,9 @@ public record PaintingJson(
         @JsonProperty("description")
         String description,
         @JsonProperty("artist")
-        UUID artistId,
+        ArtistJson artistJson,
         @JsonProperty("museum")
-        UUID museumId
+        MuseumJson museumJson
 ) {
     public static PaintingJson fromEntity(PaintingEntity entity) {
         byte[] photo = entity.getContent();
@@ -27,8 +27,8 @@ public record PaintingJson(
                 entity.getTitle(),
                 photo != null && photo.length > 0 ? new String(entity.getContent(), StandardCharsets.UTF_8) : null,
                 entity.getDescription(),
-                entity.getArtistId(),
-                entity.getMuseumId()
+                new ArtistJson(entity.getArtistId(), null, null, null),
+                new MuseumJson(entity.getMuseumId(), null, null, null, null)
         );
     }
 }

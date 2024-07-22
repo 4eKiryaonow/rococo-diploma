@@ -23,14 +23,10 @@ public class CountryEntity implements Serializable {
     @Column(name = "name", nullable = false)
     private String name;
 
-    @Column(name = "code", nullable = false)
-    private String code;
-
     public static CountryEntity fromJson(CountryJson country) {
         CountryEntity countryEntity = new CountryEntity();
         countryEntity.setId(country.id());
         countryEntity.setName(country.name());
-        countryEntity.setCode(country.code());
         return countryEntity;
     }
 

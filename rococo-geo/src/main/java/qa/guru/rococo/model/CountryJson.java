@@ -9,15 +9,12 @@ public record CountryJson(
         @JsonProperty("id")
         UUID id,
         @JsonProperty("name")
-        String name,
-        @JsonProperty("code")
-        String code) {
+        String name) {
 
     public static CountryJson fromEntity(CountryEntity countryEntity) {
         return new CountryJson(
                 countryEntity.getId(),
-                countryEntity.getName(),
-                countryEntity.getCode()
+                countryEntity.getName()
         );
     }
 }

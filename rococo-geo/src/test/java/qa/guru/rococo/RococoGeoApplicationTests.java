@@ -1,10 +1,10 @@
-package qa.guru.rococo_museum;
+package qa.guru.rococo;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class RococoMuseumApplicationTests {
+class RococoGeoApplicationTests {
 
 	@Test
 	void contextLoads() {

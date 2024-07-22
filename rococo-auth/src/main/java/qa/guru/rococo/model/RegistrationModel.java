@@ -14,5 +14,4 @@ public record RegistrationModel(
         @NotBlank(message = "Password submit can not be blank")
         @Size(min = 3, max = 12, message = "Allowed password length should be from 3 to 12 characters")
         String passwordSubmit) {
-
 }

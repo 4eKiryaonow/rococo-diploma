@@ -1,13 +1,12 @@
-package qa.guru.rococo_gateway;
+package qa.guru.rococo;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class RococoArtistApplicationTests {
+class RococoAuthApplicationTests {
 
 	@Test
 	void contextLoads() {
 	}
-
 }

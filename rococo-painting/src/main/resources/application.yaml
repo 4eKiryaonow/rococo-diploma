@@ -9,7 +9,6 @@ spring:
   application:
     name: rococo-painting
   datasource:
-    url: 'jdbc:postgresql://localhost:5432/rococo-painting'
     username: postgres
     password: secret
     hikari:
@@ -37,5 +36,16 @@ spring:
     show-sql: false
     generate-ddl: true
     open-in-view: false
+---
+spring:
+  config:
+    activate:
+      on-profile: 'local'
+  datasource:
+    url: 'jdbc:postgresql://localhost:5432/rococo-painting'
+  jpa:
+    hibernate:
+      ddl-auto: validate
 rococo-artist:
   base-uri: "http://127.0.0.1:9002"
+---
