@@ -7,5 +7,6 @@
         <class>qa.guru.rococo.data.entity.MuseumEntity</class>
         <class>qa.guru.rococo.data.entity.CountryEntity</class>
         <class>qa.guru.rococo.data.entity.GeoEntity</class>
+        <class>qa.guru.rococo.data.entity.PaintingEntity</class>
     </persistence-unit>
 </persistence>
