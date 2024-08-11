@@ -30,12 +30,12 @@ public class AuthorizationTest extends BaseWebTest {
     @DisplayName("WEB User should not authorize with incorrect credentials")
     @TestUser(fake = true)
     @Test
-    void incorrectUserLoginTest() {
+    void incorrectUserLoginTest(@User(User.Point.OUTER) UserJson user) {
         Selenide.open(WelcomePage.URL, WelcomePage.class)
                 .waitForPageLoaded()
                 .doLogin()
                 .waitForPageLoaded()
-                .fillLoginPage("kirill", "wrongPassword")
+                .fillLoginPage(user.username(), user.testData().password())
                 .submit(new LoginPage())
                 .checkError("Неверные учетные данные пользователя");
     }

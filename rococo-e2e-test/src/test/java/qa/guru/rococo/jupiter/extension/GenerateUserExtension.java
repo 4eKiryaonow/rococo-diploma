@@ -6,8 +6,10 @@ import qa.guru.rococo.jupiter.annotation.ApiLogin;
 import qa.guru.rococo.jupiter.annotation.TestUser;
 import qa.guru.rococo.jupiter.annotation.User;
 import qa.guru.rococo.model.UserJson;
+import qa.guru.rococo.utils.RandomGenerator;
 
-import java.util.*;
+import java.util.HashMap;
+import java.util.Map;
 
 public abstract class GenerateUserExtension implements BeforeEachCallback, ParameterResolver {
 
@@ -20,11 +22,17 @@ public abstract class GenerateUserExtension implements BeforeEachCallback, Param
 
         Map<User.Point, UserJson> createdUsers = new HashMap<>();
         for (Map.Entry<User.Point, TestUser> userInfo : usersForTest.entrySet()) {
-            UserJson userForPoint = createUser(userInfo.getValue());
-            createdUsers.put(userInfo.getKey(), userForPoint);
+            if (!userInfo.getValue().fake()) {
+                UserJson userForPoint = createUser(userInfo.getValue());
+                createdUsers.put(userInfo.getKey(), userForPoint);
+            } else {
+                UserJson fakeUser = RandomGenerator.generateFakeUser();
+                createdUsers.put(userInfo.getKey(), fakeUser);
             }
+
+        }
         extensionContext.getStore(GENERATE_USER_NAMESPACE).put(extensionContext.getUniqueId(), createdUsers);
-}
+    }
 
 
     public abstract UserJson createUser(TestUser user);
@@ -64,12 +72,9 @@ public abstract class GenerateUserExtension implements BeforeEachCallback, Param
 
         AnnotationSupport.findAnnotation(context.getRequiredTestMethod(), TestUser.class).ifPresent(
                 user -> {
-                    if (!user.fake()) {
-                        result.put(User.Point.OUTER, user);
-                    };
+                    result.put(User.Point.OUTER, user);
                 }
         );
-
         return result;
     }
 }

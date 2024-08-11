@@ -109,6 +109,17 @@ public class RandomGenerator {
         return faker.internet().password();
     }
 
+    public static UserJson generateFakeUser() {
+        return new UserJson(
+                null,
+                generateRandomUsername(),
+                null,
+                null,
+                null,
+                new TestData(generateRandomPassword() + "fake")
+        );
+    }
+
     public static String getRandomCity() {
         return faker.country().capital();
     }
