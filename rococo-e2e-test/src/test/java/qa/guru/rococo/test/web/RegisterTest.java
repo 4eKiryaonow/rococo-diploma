@@ -73,6 +73,6 @@ public class RegisterTest extends BaseWebTest {
                 .waitForPageLoaded()
                 .fillRegisterPage(user.username(), user.testData().password())
                 .errorSubmit()
-                .checkErrorMessage("Username " + "`"+ user.username() +"`" + " already exists");
+                .checkErrorMessage("Username `" +  user.username() + "` already exists");
     }
 }
