@@ -106,7 +106,7 @@ public class RandomGenerator {
     }
 
     public static String generateRandomPassword() {
-        return faker.internet().password();
+        return faker.internet().password(3, 8, true, true);
     }
 
     public static UserJson generateFakeUser() {
