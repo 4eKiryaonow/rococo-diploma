@@ -1,15 +1,18 @@
 package qa.guru.rococo.api;
 
-import qa.guru.rococo.config.Config;
 import okhttp3.Interceptor;
+import okhttp3.JavaNetCookieJar;
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
-import okhttp3.logging.HttpLoggingInterceptor.Level;
+import qa.guru.rococo.config.Config;
 import retrofit2.Converter;
 import retrofit2.Retrofit;
 import retrofit2.converter.jackson.JacksonConverterFactory;
 
-import static okhttp3.logging.HttpLoggingInterceptor.Level.BODY;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+import java.net.CookieManager;
+import java.net.CookiePolicy;
 
 public abstract class ApiClient {
 
@@ -18,54 +21,35 @@ public abstract class ApiClient {
     protected final OkHttpClient okHttpClient;
     protected final Retrofit retrofit;
 
-    public ApiClient(String baseUrl) {
-        this(baseUrl, false, JacksonConverterFactory.create(), BODY);
+    public ApiClient(@Nonnull String baseUrl) {
+        this(baseUrl, false, JacksonConverterFactory.create());
     }
 
-    public ApiClient(String baseUrl, Level loggingLevel) {
-        this(baseUrl, false, JacksonConverterFactory.create(), loggingLevel);
+    public ApiClient(@Nonnull String baseUrl, boolean followRedirect, @Nonnull Interceptor... interceptors) {
+        this(baseUrl, followRedirect, JacksonConverterFactory.create(), interceptors);
     }
 
-    public ApiClient(String baseUrl, boolean followRedirect) {
-        this(baseUrl, followRedirect, JacksonConverterFactory.create(), BODY);
-    }
+    public ApiClient(@Nonnull String baseUrl,
+                       boolean followRedirect,
+                       @Nonnull Converter.Factory converterFactory,
+                       @Nullable Interceptor... interceptors) {
+        OkHttpClient.Builder builder = new OkHttpClient.Builder()
+                .followRedirects(followRedirect);
 
-    public ApiClient(String baseUrl, boolean followRedirect, Level loggingLevel) {
-        this(baseUrl, followRedirect, JacksonConverterFactory.create(), loggingLevel);
-    }
-
-    public ApiClient(String baseUrl, Converter.Factory factory, Level loggingLevel) {
-        this(baseUrl, false, factory, loggingLevel);
-    }
-
-    public ApiClient(String baseUrl, Converter.Factory factory) {
-        this(baseUrl, false, factory, BODY);
-    }
-
-    public ApiClient(String baseUrl, boolean followRedirect, Converter.Factory factory) {
-        this(baseUrl, followRedirect, factory, BODY);
-    }
-
-    public ApiClient(String baseUrl,
-                     boolean followRedirect,
-                     Converter.Factory factory,
-                     Level loggingLevel,
-                     Interceptor... interceptors) {
-        OkHttpClient.Builder okHttpClientBuilder = new OkHttpClient.Builder();
-
-        if (okHttpClientBuilder != null) {
+        if (interceptors != null) {
             for (Interceptor interceptor : interceptors) {
-                okHttpClientBuilder.addNetworkInterceptor(interceptor);
+                builder.addNetworkInterceptor(interceptor);
             }
         }
-        this.okHttpClient = okHttpClientBuilder.addNetworkInterceptor(new HttpLoggingInterceptor().setLevel(loggingLevel))
-                .followRedirects(followRedirect).build();
 
+        builder.cookieJar(new JavaNetCookieJar(new CookieManager(ThreadLocalCookieStore.INSTANCE, CookiePolicy.ACCEPT_ALL)));
+        builder.addNetworkInterceptor(new HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY));
+
+        this.okHttpClient = builder.build();
         this.retrofit = new Retrofit.Builder()
                 .baseUrl(baseUrl)
-                .addConverterFactory(factory)
                 .client(this.okHttpClient)
+                .addConverterFactory(converterFactory)
                 .build();
     }
-
 }

@@ -22,6 +22,7 @@ public class RandomGenerator {
     private static File IMAGE_ARTIST = new File("src/test/resources/testdata/artist.png");
     private static File IMAGE_MUSEUM = new File("src/test/resources/testdata/museum.jpeg");
     private static File IMAGE_PAINTING = new File("src/test/resources/testdata/painting.jpg");
+    private static File IMAGE_PROFILE = new File("src/test/resources/testdata/profile.png");
 
     public static ArtistJson generateArtist() {
         return new ArtistJson(
@@ -95,6 +96,17 @@ public class RandomGenerator {
                 .map(CountryJson::fromEntity)
                 .toList();
         return countryJsons.get(getRandomIntFromList(countryJsons.size()));
+    }
+
+    public static File getProfileImage() {
+        return IMAGE_PROFILE;
+    }
+    public static String generateRandomUsername() {
+        return faker.name().username();
+    }
+
+    public static String generateRandomPassword() {
+        return faker.internet().password();
     }
 
     public static String getRandomCity() {

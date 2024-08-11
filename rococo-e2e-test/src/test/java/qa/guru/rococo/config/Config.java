@@ -20,6 +20,10 @@ public interface Config {
     String museumUrl();
     String paintingUrl();
 
+    String userdataUrl();
+
+    String authUrl();
+
     String dbHost();
 
 

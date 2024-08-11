@@ -37,6 +37,16 @@ public class DockerConfig implements Config {
     }
 
     @Override
+    public String userdataUrl() {
+        return null;
+    }
+
+    @Override
+    public String authUrl() {
+        return null;
+    }
+
+    @Override
     public String dbHost() {
         return null;
     }

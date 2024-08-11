@@ -8,5 +8,8 @@
         <class>qa.guru.rococo.data.entity.CountryEntity</class>
         <class>qa.guru.rococo.data.entity.GeoEntity</class>
         <class>qa.guru.rococo.data.entity.PaintingEntity</class>
+        <class>qa.guru.rococo.data.entity.AuthorityEntity</class>
+        <class>qa.guru.rococo.data.entity.UserAuthEntity</class>
+        <class>qa.guru.rococo.data.entity.UserEntity</class>
     </persistence-unit>
 </persistence>
