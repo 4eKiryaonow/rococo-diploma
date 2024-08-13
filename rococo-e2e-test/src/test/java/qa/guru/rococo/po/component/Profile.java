@@ -8,6 +8,8 @@ import qa.guru.rococo.utils.RandomGenerator;
 
 import javax.annotation.Nonnull;
 
+import java.io.File;
+
 import static com.codeborne.selenide.Condition.visible;
 
 @Getter
@@ -39,7 +41,8 @@ public class Profile extends BaseComponent<Profile> {
     }
 
     public Profile uploadAvatar() {
-        updatePhotoInput.uploadFile(RandomGenerator.getProfileImage());
+        File file = new File(RandomGenerator.getProfileImage().getAbsolutePath());
+        updatePhotoInput.uploadFile(file);
         return this;
     }
 

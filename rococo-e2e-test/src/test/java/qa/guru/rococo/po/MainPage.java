@@ -21,6 +21,7 @@ public class MainPage extends BasePage<MainPage> {
 
     @Override
     public MainPage waitForPageLoaded() {
+        alertMessage.shouldNotBe(visible);
         welcomeTitle.should(text("Ваши любимые картины и художники всегда рядом"));
         paintingCard.should(visible);
         artistsCard.should(visible);

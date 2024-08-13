@@ -9,7 +9,7 @@ import java.lang.annotation.Target;
 @Target(ElementType.METHOD)
 public @interface ApiLogin {
 
-    TestUser user() default @TestUser(fake = true);
+    TestUser user() default @TestUser;
 
     String username() default "";
 

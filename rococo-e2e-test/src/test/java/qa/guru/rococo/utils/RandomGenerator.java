@@ -22,7 +22,7 @@ public class RandomGenerator {
     private static File IMAGE_ARTIST = new File("src/test/resources/testdata/artist.png");
     private static File IMAGE_MUSEUM = new File("src/test/resources/testdata/museum.jpeg");
     private static File IMAGE_PAINTING = new File("src/test/resources/testdata/painting.jpg");
-    private static File IMAGE_PROFILE = new File("src/test/resources/testdata/profile.png");
+    private static File IMAGE_PROFILE = new File("rococo-e2e-test/src/test/resources/testdata/profile.png");
 
     public static ArtistJson generateArtist() {
         return new ArtistJson(
@@ -118,6 +118,14 @@ public class RandomGenerator {
                 null,
                 new TestData(generateRandomPassword() + "fake")
         );
+    }
+
+    public static String generateName() {
+        return faker.name().firstName();
+    }
+
+    public static String generateSurname() {
+        return faker.name().lastName();
     }
 
     public static String getRandomCity() {

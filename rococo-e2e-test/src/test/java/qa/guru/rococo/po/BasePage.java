@@ -13,7 +13,7 @@ public abstract class BasePage<T extends BasePage<?>> {
 
     protected static final Config CFG = Config.getInstance();
 
-    private final SelenideElement alertMessage = $(".text-base");
+    protected final SelenideElement alertMessage = $(".text-base");
     protected final SelenideElement progressRadial = $("figure[data-testid='progress-radial']");
 
     protected final SelenideElement searchInput = $("input[type='search']");

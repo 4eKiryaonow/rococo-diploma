@@ -4,15 +4,16 @@ import okhttp3.Interceptor;
 import okhttp3.JavaNetCookieJar;
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
+import qa.guru.rococo.api.context.ThreadLocalCookieStore;
 import qa.guru.rococo.config.Config;
 import retrofit2.Converter;
 import retrofit2.Retrofit;
 import retrofit2.converter.jackson.JacksonConverterFactory;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
 import java.net.CookieManager;
 import java.net.CookiePolicy;
+
+import static okhttp3.logging.HttpLoggingInterceptor.Level.BODY;
 
 public abstract class ApiClient {
 
@@ -21,18 +22,38 @@ public abstract class ApiClient {
     protected final OkHttpClient okHttpClient;
     protected final Retrofit retrofit;
 
-    public ApiClient(@Nonnull String baseUrl) {
-        this(baseUrl, false, JacksonConverterFactory.create());
+    public ApiClient(String baseUrl) {
+        this(baseUrl, false, JacksonConverterFactory.create(), BODY);
     }
 
-    public ApiClient(@Nonnull String baseUrl, boolean followRedirect, @Nonnull Interceptor... interceptors) {
-        this(baseUrl, followRedirect, JacksonConverterFactory.create(), interceptors);
+    public ApiClient(String baseUrl, boolean followRedirect, Converter.Factory converter, HttpLoggingInterceptor.Level loggingLevel) {
+        this(baseUrl, followRedirect, converter, loggingLevel, null);
     }
 
-    public ApiClient(@Nonnull String baseUrl,
-                       boolean followRedirect,
-                       @Nonnull Converter.Factory converterFactory,
-                       @Nullable Interceptor... interceptors) {
+    public ApiClient(String baseUrl,
+                     boolean followRedirect,
+                     Converter.Factory converter,
+                     HttpLoggingInterceptor.Level loggingLevel,
+                     Interceptor... interceptors) {
+        OkHttpClient.Builder okHttpClientBuilder = new OkHttpClient.Builder();
+        if (interceptors != null) {
+            for (Interceptor interceptor : interceptors) {
+                okHttpClientBuilder.addNetworkInterceptor(interceptor);
+            }
+        }
+
+        this.okHttpClient = okHttpClientBuilder.addNetworkInterceptor(new HttpLoggingInterceptor().setLevel(loggingLevel))
+                .followRedirects(followRedirect)
+                .build();
+
+        this.retrofit = new Retrofit.Builder()
+                .baseUrl(baseUrl)
+                .addConverterFactory(converter)
+                .client(this.okHttpClient)
+                .build();
+    }
+
+    public ApiClient(String baseUrl, boolean followRedirect, Interceptor... interceptors) {
         OkHttpClient.Builder builder = new OkHttpClient.Builder()
                 .followRedirects(followRedirect);
 
@@ -48,8 +69,8 @@ public abstract class ApiClient {
         this.okHttpClient = builder.build();
         this.retrofit = new Retrofit.Builder()
                 .baseUrl(baseUrl)
-                .client(this.okHttpClient)
-                .addConverterFactory(converterFactory)
+                .client(okHttpClient)
+                .addConverterFactory(JacksonConverterFactory.create())
                 .build();
     }
 }
