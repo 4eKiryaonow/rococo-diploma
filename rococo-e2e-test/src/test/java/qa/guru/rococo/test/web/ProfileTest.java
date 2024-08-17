@@ -14,9 +14,9 @@ import qa.guru.rococo.utils.RandomGenerator;
 public class ProfileTest extends BaseWebTest {
 
     @Test
-    @DisplayName("WEB Check user profile data after update")
+    @DisplayName("WEB Update user profile")
     @ApiLogin(user = @TestUser())
-    void updateAndCheckUserProfileData(@User(User.Point.INNER) UserJson user) {
+    void updateProfileDataTest(@User(User.Point.INNER) UserJson user) {
         String name = RandomGenerator.generateName();
         String surname = RandomGenerator.generateSurname();
         Selenide.open(MainPage.URL, MainPage.class)
@@ -34,5 +34,19 @@ public class ProfileTest extends BaseWebTest {
                 .checkFirstname(name)
                 .checkSurname(surname)
                 .checkAvatar();
+    }
+
+    @Test
+    @DisplayName("WEB Logout from user profile")
+    @ApiLogin(user = @TestUser())
+    void logoutTest() {
+        Selenide.open(MainPage.URL, MainPage.class)
+                .waitForPageLoaded()
+                .getHeader()
+                .goToProfile()
+                .logout(new MainPage())
+                .checkAlertMessage("Сессия завершена")
+                .getHeader()
+                .checkLoginButton();
     }
 }

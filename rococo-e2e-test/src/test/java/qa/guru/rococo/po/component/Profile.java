@@ -56,6 +56,11 @@ public class Profile extends BaseComponent<Profile> {
         return expectedPage;
     }
 
+    public <T extends BasePage> T logout(T expectedPage) {
+        exitBtn.click();
+        return expectedPage;
+    }
+
     public Profile checkFirstname(String firstname) {
         return this;
     }

@@ -9,6 +9,7 @@ import qa.guru.rococo.po.PaintingPage;
 import javax.annotation.Nonnull;
 
 import static com.codeborne.selenide.Condition.text;
+import static com.codeborne.selenide.Condition.visible;
 import static com.codeborne.selenide.Selenide.$;
 
 @Getter
@@ -48,5 +49,9 @@ public class Header extends BaseComponent<Header> {
     public Profile goToProfile() {
         avatar.click();
         return new Profile($(".card.p-4.w-modal.shadow-xl.space-y-4"));
+    }
+
+    public void checkLoginButton(){
+        loginButton.shouldBe(visible);
     }
 }
