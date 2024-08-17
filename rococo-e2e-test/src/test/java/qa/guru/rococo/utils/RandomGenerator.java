@@ -18,11 +18,12 @@ import java.util.UUID;
 public class RandomGenerator {
 
     private static final Faker faker = new Faker();
+    private static final PathUtil pathUtil = new PathUtil();
 
-    private static File IMAGE_ARTIST = new File("src/test/resources/testdata/artist.png");
-    private static File IMAGE_MUSEUM = new File("src/test/resources/testdata/museum.jpeg");
-    private static File IMAGE_PAINTING = new File("src/test/resources/testdata/painting.jpg");
-    private static File IMAGE_PROFILE = new File("rococo-e2e-test/src/test/resources/testdata/profile.png");
+    private static File IMAGE_ARTIST = new File(pathUtil.getResourcePath("testdata/artist.png"));
+    private static File IMAGE_MUSEUM = new File(pathUtil.getResourcePath("testdata/museum.jpeg"));
+    private static File IMAGE_PAINTING = new File(pathUtil.getResourcePath("testdata/painting.jpg"));
+    private static File IMAGE_PROFILE = new File(pathUtil.getResourcePath("testdata/profile.png"));
 
     public static ArtistJson generateArtist() {
         return new ArtistJson(
@@ -101,6 +102,11 @@ public class RandomGenerator {
     public static File getProfileImage() {
         return IMAGE_PROFILE;
     }
+
+    public static File getMuseumImage() {
+        return IMAGE_MUSEUM;
+    }
+
     public static String generateRandomUsername() {
         return faker.name().username();
     }

@@ -6,13 +6,10 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
-import org.springframework.web.util.UriComponentsBuilder;
 import qa.guru.rococo.ex.NoRestResponseException;
 import qa.guru.rococo.model.MuseumJson;
 import qa.guru.rococo.model.page.RestPage;
-import qa.guru.rococo.service.RestResponsePage;
 
-import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 
@@ -28,15 +25,27 @@ public class RestMuseumClient {
         this.rococoMuseumUri = rococoMuseumUri + "/internal/museum";
     }
 
-    public @Nonnull Page<MuseumJson> getAllMuseums(Pageable pageable) {
+    public @Nonnull Page<MuseumJson> getAllMuseums(String title,Pageable pageable) {
+        if (Objects.isNull(title)) {
+            return Optional.ofNullable(
+                    restTemplate
+                            .getForObject(
+                                    rococoMuseumUri + "?size={size}&page={page}",
+                                    RestPage.class,
+                                    pageable.getPageSize(),
+                                    pageable.getPageNumber())
+            ).orElseThrow(() -> new NoRestResponseException("No REST Page<MuseumJson> response is given [/api/museum/ Route]"));
+        }
         return Optional.ofNullable(
-                        restTemplate
-                                .getForObject(
-                                        rococoMuseumUri + "?size={size}&page={page}",
-                                        RestPage.class,
-                                        pageable.getPageSize(),
-                                        pageable.getPageNumber())
-                ).orElseThrow(() -> new NoRestResponseException("No REST Page<MuseumJson> response is given [/api/museum/ Route]"));
+                restTemplate
+                        .getForObject(
+                                rococoMuseumUri + "?title={title}",
+                                RestPage.class,
+                                title,
+                                pageable.getPageSize(),
+                                pageable.getPageNumber())
+        ).orElseThrow(() -> new NoRestResponseException("No REST Page<MuseumJson> response is given [/api/museum/ Route]"));
+
     }
 
     public @Nonnull MuseumJson getMuseum(@Nonnull String id) {
@@ -68,6 +77,4 @@ public class RestMuseumClient {
         ).orElseThrow(() -> new NoRestResponseException("No REST MuseumJson response is given [/api/museum/ Route]")
         );
     }
-
-
 }

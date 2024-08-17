@@ -4,7 +4,7 @@ import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.ElementsCollection;
 import com.codeborne.selenide.SelenideElement;
 import qa.guru.rococo.model.MuseumJson;
-import qa.guru.rococo.po.component.AddMuseumModal;
+import qa.guru.rococo.po.component.MuseumModal;
 
 import java.io.File;
 import java.util.List;
@@ -17,9 +17,9 @@ import static com.codeborne.selenide.Selenide.$$;
 
 public class MuseumPage extends BasePage<MuseumPage> {
 
-    public static final String URL = CFG.frontUrl() + "/museum";
+    public static final String URL = CFG.frontUrl() + "museum";
 
-    private final AddMuseumModal addMuseumModal = new AddMuseumModal($(".card.p-4.w-modal.shadow-xl.space-y-4"));
+    private final MuseumModal museumModal = new MuseumModal($(".card.p-4.w-modal.shadow-xl.space-y-4"));
 
     private final SelenideElement addMuseumBtn = $$("button").find(Condition.text("Добавить музей"));
     private final SelenideElement pageTitle = $$("h2").find(Condition.text("Музеи"));
@@ -36,24 +36,28 @@ public class MuseumPage extends BasePage<MuseumPage> {
         return this;
     }
 
+    @Override
+    public MuseumPage findByTitle(String title) {
+        return super.findByTitle(title);
+    }
+
+    public MuseumContentPage openMuseum(String title) {
+        findByTitle(title);
+        museumsCards.find(text(title)).click();
+        return new MuseumContentPage();
+    }
+
     public MuseumPage addMuseum(String title, String description, String country, String city, File image) {
         addMuseumBtn.click();
-        addMuseumModal.fillMuseumInformation(title, description, country, city, image);
-        addMuseumModal.submitMuseum();
+        museumModal.fillMuseumInformation(title, description, country, city, image);
+        museumModal.submitMuseum();
         return this;
     }
 
     public MuseumPage checkMuseums(List<MuseumJson> museumJsons) {
         museumsCards.should(sizeGreaterThanOrEqual(museumJsons.size()));
         for (var museum : museumJsons) {
-            String title = museum.title();
-            String city = museum.geo().name();
-            String name = museum.geo().country().name();
-            searchInput.setValue(title);
-            searchSubmitBtn.click();
-            museumsCards.find(text(title)).should(visible);
-            museumsCards.find(text(city)).should(visible);
-            museumsCards.find(text(name)).should(visible);
+            checkMuseum(museum);
         }
         return this;
     }

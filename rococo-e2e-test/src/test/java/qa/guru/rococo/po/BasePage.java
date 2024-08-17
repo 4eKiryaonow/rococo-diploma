@@ -25,7 +25,14 @@ public abstract class BasePage<T extends BasePage<?>> {
         alertMessage.should(Condition.visible).should(Condition.text(expectedText));
         return (T) this;
     }
+
     public void progressRadialShouldNotBeVisible() {
         progressRadial.shouldNotBe(visible, Duration.ofSeconds(6000));
+    }
+
+    public T findByTitle(String title) {
+        searchInput.setValue(title);
+        searchSubmitBtn.click();
+        return (T) this;
     }
 }
