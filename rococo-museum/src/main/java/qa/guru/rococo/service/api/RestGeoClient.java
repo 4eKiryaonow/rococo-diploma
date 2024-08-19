@@ -11,6 +11,7 @@ import qa.guru.rococo.model.GeoJson;
 
 import java.util.Objects;
 import java.util.Optional;
+
 @Component
 public class RestGeoClient {
 

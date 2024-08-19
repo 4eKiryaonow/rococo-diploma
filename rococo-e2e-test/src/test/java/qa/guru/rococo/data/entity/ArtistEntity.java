@@ -1,10 +1,10 @@
 package qa.guru.rococo.data.entity;
 
-import qa.guru.rococo.model.ArtistJson;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.proxy.HibernateProxy;
+import qa.guru.rococo.model.ArtistJson;
 
 import java.io.Serializable;
 import java.nio.charset.StandardCharsets;

@@ -4,13 +4,13 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
+import qa.guru.rococo.data.MuseumEntity;
 import qa.guru.rococo.data.repository.MuseumRepository;
+import qa.guru.rococo.ex.MuseumNotFoundException;
 import qa.guru.rococo.model.CountryJson;
+import qa.guru.rococo.model.GeoJson;
 import qa.guru.rococo.model.MuseumJson;
 import qa.guru.rococo.service.api.RestGeoClient;
-import qa.guru.rococo.data.MuseumEntity;
-import qa.guru.rococo.ex.MuseumNotFoundException;
-import qa.guru.rococo.model.GeoJson;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -81,7 +81,7 @@ public class MuseumService {
                             geoJson = addGeo(geoJson);
                             museumEntity.setCountry(geoJson.country().name());
                             museumEntity.setCity(geoJson.name());
-                            return MuseumJson.fromEntity(museumEntity,geoJson);
+                            return MuseumJson.fromEntity(museumEntity, geoJson);
                         }
                 )
                 .orElseThrow(() -> new MuseumNotFoundException("Can`t find country by given id: " + museumJson.id())

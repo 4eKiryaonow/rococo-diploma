@@ -23,7 +23,6 @@ public class MuseumRestTest {
     void getAllMuseumsTest(List<MuseumJson> museumJsonList) throws IOException {
         List<MuseumJson> listFact = museumApiClient.getAllMuseums();
         Assertions.assertTrue(listFact.size() >= museumJsonList.size());
-
     }
 
     @Test

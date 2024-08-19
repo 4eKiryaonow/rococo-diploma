@@ -51,7 +51,7 @@ public class Header extends BaseComponent<Header> {
         return new Profile($(".card.p-4.w-modal.shadow-xl.space-y-4"));
     }
 
-    public void checkLoginButton(){
+    public void checkLoginButton() {
         loginButton.shouldBe(visible);
     }
 }

@@ -4,7 +4,8 @@ public class LocalConfig implements Config {
 
     static final LocalConfig instance = new LocalConfig();
 
-    private LocalConfig() {}
+    private LocalConfig() {
+    }
 
     @Override
     public String frontUrl() {

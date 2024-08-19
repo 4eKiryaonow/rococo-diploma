@@ -58,8 +58,8 @@ public class ApiLoginExtension implements BeforeEachCallback, AfterEachCallback 
             Selenide.localStorage().setItem("id_token", getToken(context));
             WebDriverRunner.getWebDriver().manage().addCookie(getJsessionIdCookie());
             Selenide.refresh();
-            }
         }
+    }
 
 
     @Override

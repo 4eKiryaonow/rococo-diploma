@@ -11,6 +11,8 @@ import java.util.UUID;
 public interface GeoRepository {
 
     List<CountryEntity> getAllCountries();
+
     Optional<GeoEntity> getGeoByCountryIdAndName(@Nonnull UUID country_id, @Nonnull String name);
+
     GeoEntity addGeo(GeoEntity geoEntity);
 }

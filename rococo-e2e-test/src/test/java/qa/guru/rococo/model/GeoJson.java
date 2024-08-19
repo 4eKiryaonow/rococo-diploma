@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import qa.guru.rococo.data.entity.GeoEntity;
 
 import java.util.UUID;
+
 public record GeoJson(
         @JsonProperty("id")
         UUID id,

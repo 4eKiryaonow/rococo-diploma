@@ -106,10 +106,12 @@ public class RandomGenerator {
     public static File getMuseumImage() {
         return IMAGE_MUSEUM;
     }
+
     public static File getArtistImage() {
         return IMAGE_ARTIST;
     }
-    public static  File getImagePainting(){
+
+    public static File getImagePainting() {
         return IMAGE_PAINTING;
     }
 

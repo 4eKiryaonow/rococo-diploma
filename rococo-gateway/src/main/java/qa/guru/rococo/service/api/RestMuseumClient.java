@@ -25,7 +25,7 @@ public class RestMuseumClient {
         this.rococoMuseumUri = rococoMuseumUri + "/internal/museum";
     }
 
-    public @Nonnull Page<MuseumJson> getAllMuseums(String title,Pageable pageable) {
+    public @Nonnull Page<MuseumJson> getAllMuseums(String title, Pageable pageable) {
         if (Objects.isNull(title)) {
             return Optional.ofNullable(
                     restTemplate

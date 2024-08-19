@@ -7,7 +7,6 @@ import qa.guru.rococo.po.BasePage;
 import qa.guru.rococo.utils.RandomGenerator;
 
 import javax.annotation.Nonnull;
-
 import java.io.File;
 
 import static com.codeborne.selenide.Condition.visible;
@@ -73,6 +72,4 @@ public class Profile extends BaseComponent<Profile> {
         this.username.should(Condition.text(username));
         return this;
     }
-
-
 }

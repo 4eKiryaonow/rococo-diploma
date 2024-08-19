@@ -15,9 +15,13 @@ public interface Config {
     String frontUrl();
 
     String artistUrl();
+
     String gatewayUrl();
+
     String geoUrl();
+
     String museumUrl();
+
     String paintingUrl();
 
     String userdataUrl();

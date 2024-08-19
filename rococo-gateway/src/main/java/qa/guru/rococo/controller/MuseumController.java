@@ -26,7 +26,7 @@ public class MuseumController {
     @ResponseStatus(HttpStatus.OK)
     Page<MuseumJson> getAllMuseums(@RequestParam(required = false) String title,
                                    @PageableDefault Pageable pageable) {
-        return restMuseumClient.getAllMuseums(title,pageable);
+        return restMuseumClient.getAllMuseums(title, pageable);
     }
 
     @GetMapping("/{id}")

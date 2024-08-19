@@ -54,6 +54,4 @@ public class AddPaintingModal extends BaseComponent {
         submitBtn.click();
         return expectedPage;
     }
-
-
 }

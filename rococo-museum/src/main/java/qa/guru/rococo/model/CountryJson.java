@@ -1,7 +1,6 @@
 package qa.guru.rococo.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import lombok.Setter;
 
 import java.util.UUID;
 
@@ -9,6 +8,6 @@ public record CountryJson(
         @JsonProperty("id")
         UUID id,
         @JsonProperty("name")
-        String name){
+        String name) {
 }
 

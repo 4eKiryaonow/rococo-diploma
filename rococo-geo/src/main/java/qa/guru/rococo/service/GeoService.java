@@ -3,15 +3,14 @@ package qa.guru.rococo.service;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Component;
-import org.springframework.transaction.annotation.Transactional;
+import qa.guru.rococo.data.CountryEntity;
+import qa.guru.rococo.data.GeoEntity;
+import qa.guru.rococo.data.repository.CountryRepository;
 import qa.guru.rococo.data.repository.GeoRepository;
 import qa.guru.rococo.ex.CountryNotFoundException;
 import qa.guru.rococo.ex.GeoNotFoundException;
 import qa.guru.rococo.model.CountryJson;
 import qa.guru.rococo.model.GeoJson;
-import qa.guru.rococo.data.CountryEntity;
-import qa.guru.rococo.data.GeoEntity;
-import qa.guru.rococo.data.repository.CountryRepository;
 
 import java.util.Optional;
 import java.util.UUID;

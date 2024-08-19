@@ -1,7 +1,7 @@
 package qa.guru.rococo.data;
 
-import qa.guru.rococo.config.Config;
 import lombok.RequiredArgsConstructor;
+import qa.guru.rococo.config.Config;
 
 @RequiredArgsConstructor
 public enum DataBase {

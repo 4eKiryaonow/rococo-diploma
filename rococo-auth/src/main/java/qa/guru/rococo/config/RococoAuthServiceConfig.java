@@ -58,13 +58,13 @@ public class RococoAuthServiceConfig {
 
     @Autowired
     public RococoAuthServiceConfig(KeyManager keyManager,
-                                    @Value("${rococo-front.base-uri}") String nifflerFrontUri,
-                                    @Value("${rococo-auth.base-uri}") String nifflerAuthUri,
-                                    @Value("${oauth2.client-id}") String clientId,
-                                    @Value("${oauth2.client-secret}") String clientSecret,
-                                    @Value("${server.port}") String serverPort,
-                                    CorsCustomizer corsCustomizer,
-                                    Environment environment) {
+                                   @Value("${rococo-front.base-uri}") String nifflerFrontUri,
+                                   @Value("${rococo-auth.base-uri}") String nifflerAuthUri,
+                                   @Value("${oauth2.client-id}") String clientId,
+                                   @Value("${oauth2.client-secret}") String clientSecret,
+                                   @Value("${server.port}") String serverPort,
+                                   CorsCustomizer corsCustomizer,
+                                   Environment environment) {
         this.keyManager = keyManager;
         this.nifflerFrontUri = nifflerFrontUri;
         this.nifflerAuthUri = nifflerAuthUri;

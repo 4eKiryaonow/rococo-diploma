@@ -25,7 +25,7 @@ public class RestPaintingClient {
         this.rococoPaintingUri = rococoPaintingUri + "/internal/painting";
     }
 
-    public @Nonnull Page<PaintingJson> getAllPaintings(String title,Pageable pageable) {
+    public @Nonnull Page<PaintingJson> getAllPaintings(String title, Pageable pageable) {
         if (Objects.isNull(title)) {
             return Optional.ofNullable(
                     restTemplate

@@ -16,5 +16,4 @@ public abstract class BaseComponent<T extends BaseComponent> {
     public SelenideElement getSelf() {
         return self;
     }
-
 }

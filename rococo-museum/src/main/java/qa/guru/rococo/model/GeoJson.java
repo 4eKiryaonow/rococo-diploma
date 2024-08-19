@@ -1,7 +1,6 @@
 package qa.guru.rococo.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import lombok.AllArgsConstructor;
 
 import java.util.UUID;
 

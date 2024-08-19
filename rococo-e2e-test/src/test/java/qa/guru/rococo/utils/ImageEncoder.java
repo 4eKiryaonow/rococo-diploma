@@ -10,7 +10,6 @@ public class ImageEncoder {
     public static String encode(File file) {
         String encoded = null;
         try {
-            // Чтение файла в байтовый массив
             FileInputStream fileInputStream = new FileInputStream(file);
             byte[] bytes = new byte[(int) file.length()];
             fileInputStream.read(bytes);
@@ -19,6 +18,6 @@ public class ImageEncoder {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        return "data:image/jpeg;base64," + encoded ;
+        return "data:image/jpeg;base64," + encoded;
     }
 }

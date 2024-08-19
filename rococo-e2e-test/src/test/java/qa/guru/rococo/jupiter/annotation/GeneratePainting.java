@@ -13,7 +13,10 @@ import java.lang.annotation.Target;
 @ExtendWith(GeneratePaintingExtension.class)
 public @interface GeneratePainting {
     int count() default 1;
+
     String title() default "";
+
     String description() default "";
+
     String photo() default "";
 }

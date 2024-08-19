@@ -4,7 +4,8 @@ public class DockerConfig implements Config {
 
     static final DockerConfig instance = new DockerConfig();
 
-    private DockerConfig() {}
+    private DockerConfig() {
+    }
 
     @Override
     public String frontUrl() {

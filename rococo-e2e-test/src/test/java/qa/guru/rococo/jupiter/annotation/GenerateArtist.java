@@ -1,7 +1,7 @@
 package qa.guru.rococo.jupiter.annotation;
 
-import qa.guru.rococo.jupiter.extension.GenerateArtistExtension;
 import org.junit.jupiter.api.extension.ExtendWith;
+import qa.guru.rococo.jupiter.extension.GenerateArtistExtension;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
@@ -14,7 +14,10 @@ import java.lang.annotation.Target;
 public @interface GenerateArtist {
 
     int count() default 1;
+
     String name() default "";
+
     String biography() default "";
+
     String photo() default "";
 }

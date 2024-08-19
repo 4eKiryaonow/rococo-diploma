@@ -60,5 +60,4 @@ public class ArtistPage extends BasePage<ArtistPage> {
         }
         return this;
     }
-
 }

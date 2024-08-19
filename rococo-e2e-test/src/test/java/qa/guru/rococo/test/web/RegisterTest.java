@@ -45,7 +45,7 @@ public class RegisterTest extends BaseWebTest {
     @Test
     @TestUser(fake = true)
     void registrationShouldNotBeCompletedPasswordShort(@User(User.Point.OUTER) UserJson user) {
-        String shortPassword = (user.testData().password()).substring(0,2);
+        String shortPassword = (user.testData().password()).substring(0, 2);
         Selenide.open(RegisterPage.URL, RegisterPage.class)
                 .waitForPageLoaded()
                 .fillRegisterPage(user.username(), shortPassword)
@@ -73,6 +73,6 @@ public class RegisterTest extends BaseWebTest {
                 .waitForPageLoaded()
                 .fillRegisterPage(user.username(), user.testData().password())
                 .errorSubmit()
-                .checkErrorMessage("Username `" +  user.username() + "` already exists");
+                .checkErrorMessage("Username `" + user.username() + "` already exists");
     }
 }

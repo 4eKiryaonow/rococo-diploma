@@ -41,14 +41,6 @@ public class ArtistService {
         return ArtistJson.fromEntity(artistEntity);
     }
 
-    //зачем?
-    @Transactional(readOnly = true)
-    public Page<ArtistJson> getByName(Pageable pageable, String name) {
-        return artistRepository
-                .findAllByNameContainsIgnoreCase(name, pageable)
-                .map(ArtistJson::fromEntity);
-    }
-
     @Transactional
     public ArtistJson addArtist(ArtistJson artist) {
         ArtistEntity artistEntity = artistRepository.save(ArtistEntity.fromJson(artist));

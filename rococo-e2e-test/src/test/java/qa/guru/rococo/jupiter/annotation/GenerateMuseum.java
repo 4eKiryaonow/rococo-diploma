@@ -14,8 +14,12 @@ import java.lang.annotation.Target;
 public @interface GenerateMuseum {
 
     int count() default 1;
+
     String title() default "";
+
     String description() default "";
+
     String photo() default "";
+
     GenerateGeo generateGeo() default @GenerateGeo;
 }

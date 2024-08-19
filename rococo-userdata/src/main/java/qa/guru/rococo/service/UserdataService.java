@@ -8,9 +8,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.messaging.handler.annotation.Payload;
 import org.springframework.stereotype.Component;
-import qa.guru.rococo.ex.UserNotFoundException;
 import qa.guru.rococo.data.UserEntity;
 import qa.guru.rococo.data.repository.UserdataRepository;
+import qa.guru.rococo.ex.UserNotFoundException;
 import qa.guru.rococo.model.UserJson;
 
 import java.nio.charset.StandardCharsets;

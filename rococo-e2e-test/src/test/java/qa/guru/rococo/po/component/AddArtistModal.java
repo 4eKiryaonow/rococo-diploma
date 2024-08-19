@@ -19,7 +19,7 @@ public class AddArtistModal extends BaseComponent {
     private final SelenideElement biographyInput = self.$("textarea[name='biography']");
     private final SelenideElement closeBtn = self.$(".btn.variant-ringed");
     private final SelenideElement submitBtn = self.$("button[type='submit']");
-    private final SelenideElement avatarImage = self.$(".avatar-image"); //только при редактировании художника
+    private final SelenideElement avatarImage = self.$(".avatar-image");
 
 
     public AddArtistModal(@Nonnull SelenideElement self) {
@@ -44,5 +44,4 @@ public class AddArtistModal extends BaseComponent {
         submitBtn.click();
         return expectedPage;
     }
-
 }

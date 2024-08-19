@@ -34,5 +34,4 @@ public class MuseumModal extends BaseComponent {
         submitBtn.click();
         return new MuseumPage();
     }
-
 }
