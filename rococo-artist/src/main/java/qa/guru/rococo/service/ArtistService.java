@@ -1,5 +1,6 @@
 package qa.guru.rococo.service;
 
+import jakarta.annotation.Nullable;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Component;
@@ -10,6 +11,7 @@ import qa.guru.rococo.ex.ArtistNotFoundException;
 import qa.guru.rococo.model.ArtistJson;
 
 import java.nio.charset.StandardCharsets;
+import java.util.Objects;
 import java.util.UUID;
 
 @Component
@@ -22,10 +24,14 @@ public class ArtistService {
     }
 
     @Transactional(readOnly = true)
-    public Page<ArtistJson> getAllArtists(Pageable pageable) {
-        return artistRepository
-                .findAll(pageable)
-                .map(ArtistJson::fromEntity);
+    public Page<ArtistJson> getAllArtists(@Nullable String name, Pageable pageable) {
+        Page<ArtistEntity> artists;
+        if (Objects.isNull(name)) {
+            artists = artistRepository.findAll(pageable);
+        } else {
+            artists = artistRepository.findAllByNameContainsIgnoreCase(name, pageable);
+        }
+        return artists.map(ArtistJson::fromEntity);
     }
 
     @Transactional(readOnly = true)
@@ -34,7 +40,8 @@ public class ArtistService {
                 new ArtistNotFoundException("Can`t find artist by given id: " + id));
         return ArtistJson.fromEntity(artistEntity);
     }
-//зачем?
+
+    //зачем?
     @Transactional(readOnly = true)
     public Page<ArtistJson> getByName(Pageable pageable, String name) {
         return artistRepository

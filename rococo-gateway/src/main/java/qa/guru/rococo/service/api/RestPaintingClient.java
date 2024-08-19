@@ -6,7 +6,6 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
-import org.springframework.web.util.UriComponentsBuilder;
 import qa.guru.rococo.ex.NoRestResponseException;
 import qa.guru.rococo.model.PaintingJson;
 import qa.guru.rococo.model.page.RestPage;
@@ -26,15 +25,27 @@ public class RestPaintingClient {
         this.rococoPaintingUri = rococoPaintingUri + "/internal/painting";
     }
 
-    public @Nonnull Page<PaintingJson> getAllPaintings(Pageable pageable) {
+    public @Nonnull Page<PaintingJson> getAllPaintings(String title,Pageable pageable) {
+        if (Objects.isNull(title)) {
+            return Optional.ofNullable(
+                    restTemplate
+                            .getForObject(
+                                    rococoPaintingUri + "?size={size}&page={page}",
+                                    RestPage.class,
+                                    pageable.getPageSize(),
+                                    pageable.getPageNumber())
+            ).orElseThrow(() -> new NoRestResponseException("No REST PaintingJson response is given [/api/painting/ Route]"));
+        }
         return Optional.ofNullable(
                 restTemplate
                         .getForObject(
-                                rococoPaintingUri + "?size={size}&page={page}",
+                                rococoPaintingUri + "?title={title}",
                                 RestPage.class,
+                                title,
                                 pageable.getPageSize(),
                                 pageable.getPageNumber())
         ).orElseThrow(() -> new NoRestResponseException("No REST PaintingJson response is given [/api/painting/ Route]"));
+
     }
 
     public @Nonnull PaintingJson getPainting(@Nonnull String id) {

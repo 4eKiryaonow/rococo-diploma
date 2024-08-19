@@ -13,8 +13,8 @@ import qa.guru.rococo.utils.RandomGenerator;
 
 public class ProfileTest extends BaseWebTest {
 
-    @Test
     @DisplayName("WEB Update user profile")
+    @Test
     @ApiLogin(user = @TestUser())
     void updateProfileDataTest(@User(User.Point.INNER) UserJson user) {
         String name = RandomGenerator.generateName();
@@ -36,8 +36,8 @@ public class ProfileTest extends BaseWebTest {
                 .checkAvatar();
     }
 
-    @Test
     @DisplayName("WEB Logout from user profile")
+    @Test
     @ApiLogin(user = @TestUser())
     void logoutTest() {
         Selenide.open(MainPage.URL, MainPage.class)

@@ -45,7 +45,6 @@ public class RestMuseumClient {
                                 pageable.getPageSize(),
                                 pageable.getPageNumber())
         ).orElseThrow(() -> new NoRestResponseException("No REST Page<MuseumJson> response is given [/api/museum/ Route]"));
-
     }
 
     public @Nonnull MuseumJson getMuseum(@Nonnull String id) {

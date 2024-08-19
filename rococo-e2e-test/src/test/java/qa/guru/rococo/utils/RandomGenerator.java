@@ -40,7 +40,7 @@ public class RandomGenerator {
                 faker.company().name(),
                 faker.shakespeare().romeoAndJulietQuote(),
                 ImageEncoder.encode(IMAGE_MUSEUM),
-                generateGson()
+                generateGeoJson()
         );
     }
 
@@ -53,11 +53,11 @@ public class RandomGenerator {
                 ImageEncoder.encode(IMAGE_PAINTING),
                 faker.shakespeare().asYouLikeItQuote(),
                 ArtistJson.fromEntity(artistEntity),
-                MuseumJson.fromEntity(museumEntity, generateGson())
+                MuseumJson.fromEntity(museumEntity, generateGeoJson())
         );
     }
 
-    public static GeoJson generateGson() {
+    public static GeoJson generateGeoJson() {
         CountryJson countryJson = getRandomCountry();
 
         final UUID countryId = countryJson.id();
@@ -105,6 +105,12 @@ public class RandomGenerator {
 
     public static File getMuseumImage() {
         return IMAGE_MUSEUM;
+    }
+    public static File getArtistImage() {
+        return IMAGE_ARTIST;
+    }
+    public static  File getImagePainting(){
+        return IMAGE_PAINTING;
     }
 
     public static String generateRandomUsername() {

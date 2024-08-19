@@ -11,8 +11,8 @@ import qa.guru.rococo.po.RegisterPage;
 
 public class RegisterTest extends BaseWebTest {
 
-    @Test
     @DisplayName("WEB Registration User should login after registration")
+    @Test
     @TestUser(fake = true)
     void userShouldLoginAfterRegistering(@User(User.Point.OUTER) UserJson user) {
 
@@ -27,8 +27,8 @@ public class RegisterTest extends BaseWebTest {
                 .avatarShouldBeVisibleAfterLogin();
     }
 
-    @Test
     @DisplayName("WEB Registration should not be completed because password is different")
+    @Test
     @TestUser(fake = true)
     void registrationShouldNotBeCompletedCausePasswordDiff(@User(User.Point.OUTER) UserJson user) {
         String diffPassword = user.testData().password() + "diff";
@@ -41,8 +41,8 @@ public class RegisterTest extends BaseWebTest {
                 .checkErrorMessage("Passwords should be equal");
     }
 
-    @Test
     @DisplayName("WEB Registration should not be completed because password is short")
+    @Test
     @TestUser(fake = true)
     void registrationShouldNotBeCompletedPasswordShort(@User(User.Point.OUTER) UserJson user) {
         String shortPassword = (user.testData().password()).substring(0,2);
@@ -53,8 +53,8 @@ public class RegisterTest extends BaseWebTest {
                 .checkErrorMessage("Allowed password length should be from 3 to 12 characters");
     }
 
-    @Test
     @DisplayName("WEB Registration should not be completed because password is too long")
+    @Test
     @TestUser(fake = true)
     void registrationShouldNotBeCompletedPasswordLong(@User(User.Point.OUTER) UserJson user) {
         String longPassword = user.testData().password() + "add some length";
@@ -65,8 +65,8 @@ public class RegisterTest extends BaseWebTest {
                 .checkErrorMessage("Allowed password length should be from 3 to 12 characters");
     }
 
-    @Test
     @DisplayName("WEB Registration should not be completed because user already exists")
+    @Test
     @TestUser
     void registrationShouldNotBeCompletedUserAlreadyExists(@User(User.Point.OUTER) UserJson user) {
         Selenide.open(RegisterPage.URL, RegisterPage.class)

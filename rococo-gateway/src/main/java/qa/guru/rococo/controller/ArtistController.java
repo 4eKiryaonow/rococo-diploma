@@ -26,8 +26,9 @@ public class ArtistController {
 
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
-    Page<ArtistJson> getAllArtists(@PageableDefault Pageable pageable) {
-        return restArtistClient.getAllArtists(pageable);
+    Page<ArtistJson> getAllArtists(@RequestParam(required = false) String name,
+                                   @PageableDefault Pageable pageable) {
+        return restArtistClient.getAllArtists(name, pageable);
     }
 
     @GetMapping("/{id}")

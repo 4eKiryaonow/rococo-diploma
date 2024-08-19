@@ -13,8 +13,8 @@ import qa.guru.rococo.po.WelcomePage;
 public class AuthorizationTest extends BaseWebTest {
 
     @DisplayName("WEB User should authorize with valid credentials")
-    @TestUser
     @Test
+    @TestUser
     void loginTest(@User(User.Point.OUTER) UserJson user) {
         Selenide.open(WelcomePage.URL, WelcomePage.class)
                 .waitForPageLoaded()
@@ -28,8 +28,8 @@ public class AuthorizationTest extends BaseWebTest {
 
 
     @DisplayName("WEB User should not authorize with incorrect credentials")
-    @TestUser(fake = true)
     @Test
+    @TestUser(fake = true)
     void incorrectUserLoginTest(@User(User.Point.OUTER) UserJson user) {
         Selenide.open(WelcomePage.URL, WelcomePage.class)
                 .waitForPageLoaded()

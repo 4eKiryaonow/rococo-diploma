@@ -35,15 +35,27 @@ public class RestArtistClient {
         ).orElseThrow(() -> new NoRestResponseException("No REST ArtistJson response is given [/api/artist/{id} Route]"));
     }
 
-    public @Nonnull Page<ArtistJson> getAllArtists(Pageable pageable) {
+    public @Nonnull Page<ArtistJson> getAllArtists(String name, Pageable pageable) {
+        if (Objects.isNull(name)) {
+            return Optional.ofNullable(
+                    restTemplate
+                            .getForObject(
+                                    rococoArtistApiUri + "?size={size}&page={page}",
+                                    RestPage.class,
+                                    pageable.getPageSize(),
+                                    pageable.getPageNumber())
+            ).orElseThrow(() -> new NoRestResponseException("No REST ArtistJson response is given [/api/artist/ Route]"));
+        }
         return Optional.ofNullable(
                 restTemplate
                         .getForObject(
-                                rococoArtistApiUri + "?size={size}&page={page}",
+                                rococoArtistApiUri + "?name={title}",
                                 RestPage.class,
+                                name,
                                 pageable.getPageSize(),
                                 pageable.getPageNumber())
         ).orElseThrow(() -> new NoRestResponseException("No REST ArtistJson response is given [/api/artist/ Route]"));
+
     }
 
     public @Nonnull ArtistJson addArtist(ArtistJson artistJson) {

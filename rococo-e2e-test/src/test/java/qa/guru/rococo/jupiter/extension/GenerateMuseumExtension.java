@@ -56,5 +56,4 @@ public class GenerateMuseumExtension implements BeforeEachCallback, ParameterRes
         return extensionContext.getStore(NAMESPACE_MUSEUM).get(extensionContext.getUniqueId());
     }
 
-
 }

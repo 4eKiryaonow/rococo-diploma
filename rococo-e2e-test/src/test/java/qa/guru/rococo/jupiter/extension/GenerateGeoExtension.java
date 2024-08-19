@@ -18,7 +18,7 @@ public class GenerateGeoExtension implements BeforeEachCallback, ParameterResolv
         ).ifPresent(geo ->
                 extensionContext
                         .getStore(NAMESPACE_GEO)
-                        .put(extensionContext.getUniqueId(), RandomGenerator.generateGson())
+                        .put(extensionContext.getUniqueId(), RandomGenerator.generateGeoJson())
 
         );
     }

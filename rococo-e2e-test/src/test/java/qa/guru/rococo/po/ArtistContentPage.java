@@ -11,7 +11,7 @@ import static com.codeborne.selenide.Condition.visible;
 import static com.codeborne.selenide.Selenide.$;
 import static java.time.Duration.ofSeconds;
 
-public class ArtistProfilePage extends BasePage<ArtistProfilePage> {
+public class ArtistContentPage extends BasePage<ArtistContentPage> {
 
     private final SelenideElement artistName = $(".card-header");
     private final SelenideElement biography = $(".col-span-2.m-2");
@@ -19,14 +19,13 @@ public class ArtistProfilePage extends BasePage<ArtistProfilePage> {
     private final SelenideElement artistPictures = $(".grid.grid-cols-1.gap-4");
     private final SelenideElement emptyPicturesListMessage = $(new ByText("Пока что список картин этого художника пуст."));
 
-    //for authorized user only
     private final SelenideElement editArtistBtn = $("button[data-testid='edit-artist']");
     private final SelenideElement addPictureMainBtn = $(".btn.variant-filled-primary.m-3");
     private final SelenideElement addPictureSecondBtn = $(".btn.variant-filled-primary.ml-4");
 
 
     @Override
-    public ArtistProfilePage waitForPageLoaded() {
+    public ArtistContentPage waitForPageLoaded() {
         progressRadialShouldNotBeVisible();
         artistName.should(visible, ofSeconds(3000));
         biography.should(visible, ofSeconds(3000));
@@ -38,12 +37,12 @@ public class ArtistProfilePage extends BasePage<ArtistProfilePage> {
         return new AddPaintingModal($(".card.p-4.w-modal.shadow-xl.space-y-4"));
     }
 
-    public ArtistProfilePage checkThatPaintingIsEnableOnArtistProfilePage(PaintingJson paintingJson) {
+    public ArtistContentPage checkThatPaintingIsEnableOnArtistProfilePage(PaintingJson paintingJson) {
         artistPictures.$$(".text-center").find(text(paintingJson.title())).should(visible);
         return this;
     }
 
-    public ArtistProfilePage checkArtistInfo(ArtistJson artistJson) {
+    public ArtistContentPage checkArtistInfo(ArtistJson artistJson) {
         artistName.should(text(artistJson.name()));
         biography.should(text(artistJson.biography()));
         return this;

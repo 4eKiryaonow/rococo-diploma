@@ -26,7 +26,7 @@ public class PaintingController {
     @ResponseStatus(HttpStatus.OK)
     Page<PaintingJson> getAllPaintings(@RequestParam(required = false) String title,
                                        @PageableDefault Pageable pageable) {
-        return restPaintingClient.getAllPaintings(pageable);
+        return restPaintingClient.getAllPaintings(title, pageable);
     }
 
     @GetMapping("/{id}")
@@ -39,7 +39,7 @@ public class PaintingController {
     @ResponseStatus(HttpStatus.OK)
     Page<PaintingJson> getPaintingsByAuthorId(@PathVariable String id,
                                               @PageableDefault Pageable pageable) {
-        return restPaintingClient.getPaintingByAuthorId(id,pageable);
+        return restPaintingClient.getPaintingByAuthorId(id, pageable);
     }
 
     @PostMapping()

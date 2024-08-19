@@ -63,7 +63,7 @@ public class MuseumRestTest {
         MuseumEntity museumEntityInit = MuseumEntity.fromJson(museumJsonList.getFirst());
         final String titleEdited = museumEntityInit.getTitle() + "edited";
         final String descEdited = museumEntityInit.getDescription() + "edited";
-        GeoJson newGeoJson = RandomGenerator.generateGson();
+        GeoJson newGeoJson = RandomGenerator.generateGeoJson();
         museumEntityInit.setTitle(titleEdited);
         museumEntityInit.setDescription(descEdited);
         MuseumJson editedMuseum = museumApiClient.editMuseum(MuseumJson.fromEntity(museumEntityInit, newGeoJson));

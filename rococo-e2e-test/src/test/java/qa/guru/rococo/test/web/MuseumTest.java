@@ -15,20 +15,20 @@ import java.util.List;
 public class MuseumTest extends BaseWebTest {
 
     @DisplayName("WEB Museums are available for log out user")
-    @GenerateMuseum(count = 3)
     @Test
-    void unauthorizedUserShouldSeeMuseums(List<MuseumJson> museumJsonList) {
+    @GenerateMuseum(count = 3)
+    void unauthorizedUserShouldSeeMuseumsTest(List<MuseumJson> museumJsonList) {
         Selenide.open(MuseumPage.URL, MuseumPage.class)
                 .waitForPageLoaded()
                 .checkAddMuseumButton(false)
                 .checkMuseums(museumJsonList);
     }
 
-    @DisplayName("WEB Museums are available for log out user")
+    @DisplayName("WEB Museums are available for log in user")
+    @Test
     @ApiLogin(user = @TestUser())
     @GenerateMuseum(count = 3)
-    @Test
-    void authorizedUserShouldSeeMuseums(List<MuseumJson> museumJsonList) {
+    void authorizedUserShouldSeeMuseumsTest(List<MuseumJson> museumJsonList) {
         Selenide.open(MuseumPage.URL, MuseumPage.class)
                 .waitForPageLoaded()
                 .checkAddMuseumButton(true)
